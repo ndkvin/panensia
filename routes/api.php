@@ -17,4 +17,14 @@ use App\Models\User;
 
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::post('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->middleware('auth:api');
+Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->middleware('auth:api');
+
+Route::get('/', function () {
+  return response()->json([
+    'success' => false,
+    'code' => 403,
+    'message' => [
+      'You are not allowed to access this route'
+    ]
+  ], 403);
+})->name('login');
