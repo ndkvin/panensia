@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use Lcobucci\JWT\Configuration;
@@ -23,8 +24,20 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-      Passport::tokensExpireIn(now()->addDays(15));
+      Passport::tokensExpireIn(now()->addMonth(12));
       Passport::refreshTokensExpireIn(now()->addDays(30));
-      Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+      Passport::personalAccessTokensExpireIn(now()->addDays(1));
+
+      Gate::define('admin', function (User $user) {
+        return $user->role == 'admin';
+      });
+
+      Gate::define('user', function (User $user) {
+        return $user->role == 'user';
+      });
+
+      Gate::define('reseller', function (User $user) {
+        return $user->role == 'reseller';
+      });
     }
 }

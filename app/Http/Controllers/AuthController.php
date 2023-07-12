@@ -30,6 +30,7 @@ class AuthController extends Controller
       return response()->json([
         'success' => false,
         'code' => 422,
+        'message' => 'Unprocessable Entity',
         'errors' => $errorMessage
       ], 422);
     }
@@ -44,6 +45,7 @@ class AuthController extends Controller
     return response([
       'success' => true,
       'code' => 200,
+      'message' => 'User created successfully',
       'data' => [
         'user' => $user,
         'access_token' => $accessToken
@@ -69,6 +71,7 @@ class AuthController extends Controller
       return response()->json([
         'success' => false,
         'code' => 422,
+        'message' => 'Unprocessable Entity',
         'errors' => $errorMessage
       ], 422);
     }
@@ -77,7 +80,8 @@ class AuthController extends Controller
       return response()->json([
         'success' => false,
         'code' => 400,
-        'message' => ['credential not match to our record']
+        'message' => 'Bad Request',
+        'errors' => ['credential not match to our record']
       ], 400);
     }
 
@@ -87,6 +91,7 @@ class AuthController extends Controller
       [
         'success' => true,
         'code' => 200,
+        'message' => 'User login successfully',
         'data' => [
           'user' => auth()->user(),
           'access_token' => $accessToken
@@ -103,6 +108,7 @@ class AuthController extends Controller
       return response()->json([
         'success' => true,
         'code' => 200,
+        'message' => 'User profile successfully',
         'data' => $user
       ]);
     }

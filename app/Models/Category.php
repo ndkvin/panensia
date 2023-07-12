@@ -12,4 +12,14 @@ class Category extends Model
     protected  $guarded = [
         'id'
     ];
+
+    public function getImageAttribute($value)
+    {
+        return $value == null ? null : asset('storage/' . $value);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

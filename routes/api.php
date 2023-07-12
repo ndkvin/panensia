@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -19,7 +20,7 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->middleware('auth:api');
 
-Route::get('/', function () {
+Route::get('/unauthorize', function () {
   return response()->json([
     'success' => false,
     'code' => 403,
@@ -28,3 +29,17 @@ Route::get('/', function () {
     ]
   ], 403);
 })->name('login');
+
+Route::group([
+  'middleware' => ['auth:api', 'can:admin'],
+  'prefix' => 'admin',
+  'as' => 'admin',
+  'namespace' => 'App\Http\Controllers\Admin'
+], function () {
+
+  // category
+  Route::resource('category', CategoryController::class)
+    ->except(['edit', 'create']);
+  Route::post('category/{category}/image', [CategoryImageController::class, 'store']);
+  Route::post('category/{category}/image/edit', [CategoryImageController::class, 'update']);
+});
