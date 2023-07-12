@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\UnauthorizedException;
@@ -58,6 +59,17 @@ class Handler extends ExceptionHandler
           ], 403);
         }
         
+        if($exception instanceof AuthenticationException) {
+          return response()->json([
+              'success' => false,
+              'code' => 403,
+              'message' => 'Unauthorized',
+              'errors' => [
+                'You are not authorized to access this resource',
+              ]
+          ], 403);
+        }
+
         if ($exception instanceof ModelNotFoundException) {
           return response()->json([
             'success' => false,
@@ -75,7 +87,7 @@ class Handler extends ExceptionHandler
         return response()->json([
           'success' => false,
           'code' => $statusCode,
-          'message' => 'Server Error',
+          'message' => $message,
           'errors' => [$message],
         ], $statusCode);
         
