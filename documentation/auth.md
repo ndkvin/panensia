@@ -135,10 +135,10 @@ Error Response
 ```http
 {
     "success": false,
-    "code": 500,
-    "message": "Server Error",
+    "code": 403,
+    "message": "Unauthorized",
     "errors": [
-        "Unauthenticated."
+        "You are not authorized to access this resource"
     ]
 }
 ````
