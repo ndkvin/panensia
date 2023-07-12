@@ -25,16 +25,14 @@ Success Response
     "code": 200,
     "message": "Category list",
     "data": [
-        [
-            {
-                "id": 1,
-                "name": "Herbal",
-                "slug": "herbal",
-                "image": "http://panensia.id/storage/images/categories/j0AihD2gN3Edvc4t39h69OW45GpJ036Rg9eUqzfx.jpg",
-                "created_at": "2023-07-12T10:13:27.000000Z",
-                "updated_at": "2023-07-12T10:58:34.000000Z"
-            }
-        ]
+        {
+            "id": 1,
+            "name": "Herbal",
+            "slug": "herbal",
+            "image": "http://panensia.id/storage/images/categories/j0AihD2gN3Edvc4t39h69OW45GpJ036Rg9eUqzfx.jpg",
+            "created_at": "2023-07-12T10:13:27.000000Z",
+            "updated_at": "2023-07-12T10:58:34.000000Z"
+        }
     ]
 }
 ```
@@ -68,13 +66,11 @@ Success Response
     "code": 201,
     "message": "Category created successfully",
     "data": {
-        "category": {
-            "name": "olahan",
-            "slug": "olahan",
-            "updated_at": "2023-07-12T10:40:05.000000Z",
-            "created_at": "2023-07-12T10:40:05.000000Z",
-            "id": 2
-        }
+        "name": "olahan",
+        "slug": "olahan",
+        "updated_at": "2023-07-12T11:49:06.000000Z",
+        "created_at": "2023-07-12T11:49:06.000000Z",
+        "id": 3
     }
 }
 ````
@@ -113,16 +109,14 @@ Success Response
     "success": true,
     "code": 200,
     "message": "Category updated successfully",
-    "data": [
-        {
-            "id": 2,
-            "name": "olahan",
-            "slug": "olahan",
-            "image": null,
-            "created_at": "2023-07-12T10:40:05.000000Z",
-            "updated_at": "2023-07-12T10:40:05.000000Z"
-        }
-    ]
+    "data": {
+        "id": 3,
+        "name": "olahan",
+        "slug": "olahan",
+        "image": null,
+        "created_at": "2023-07-12T11:49:06.000000Z",
+        "updated_at": "2023-07-12T11:49:06.000000Z"
+    }
 }
 ````
 
@@ -190,16 +184,15 @@ Success Response
     "success": true,
     "code": 201,
     "message": "Category image uploaded successfully",
-    "data": [
-        {
-            "id": 1,
-            "name": "Herbal",
-            "slug": "herbal",
-            "image": "http://panensia.id/storage/images/categories/ASm5MJGx7AofBzen38qvmri1PWYA0Q2VQYqyBy3Q.jpg",
-            "created_at": "2023-07-12T10:13:27.000000Z",
-            "updated_at": "2023-07-12T10:49:50.000000Z"
-        }
-    ]
+    "data": {
+        "id": 1,
+        "name": "Herbal",
+        "slug": "herbal",
+        "image": "http://panensia.id/storage/images/categories/ASm5MJGx7AofBzen38qvmri1PWYA0Q2VQYqyBy3Q.jpg",
+        "created_at": "2023-07-12T10:13:27.000000Z",
+        "updated_at": "2023-07-12T10:49:50.000000Z"
+    }
+    
 }
 ````
 
@@ -215,7 +208,7 @@ Error Response
 }
 ````
 
-#### Add Image Category
+#### Edit Image Category
 ```http
   POST ${baseUrl}/admin/category/${categoryId}/image/edit
 ```
@@ -237,16 +230,15 @@ Success Response
     "success": true,
     "code": 200,
     "message": "Category image updated successfully",
-    "data": [
-        {
-            "id": 1,
-            "name": "Herbal",
-            "slug": "herbal",
-            "image": "http://panensia.id/storage/images/categories/j0AihD2gN3Edvc4t39h69OW45GpJ036Rg9eUqzfx.jpg",
-            "created_at": "2023-07-12T10:13:27.000000Z",
-            "updated_at": "2023-07-12T10:58:34.000000Z"
-        }
-    ]
+    "data": {
+        "id": 1,
+        "name": "Herbal",
+        "slug": "herbal",
+        "image": "http://panensia.id/storage/images/categories/j0AihD2gN3Edvc4t39h69OW45GpJ036Rg9eUqzfx.jpg",
+        "created_at": "2023-07-12T10:13:27.000000Z",
+        "updated_at": "2023-07-12T10:58:34.000000Z"
+    }
+    
 }
 ````
 

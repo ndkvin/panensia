@@ -51,9 +51,8 @@ class CategoryImageController extends Controller
         'success' => true,
         'code' => 201,
         'message' => 'Category image uploaded successfully',
-        'data' => [
-          $category
-        ]
+        'data' => $category
+        
       ], 201);
 
     }
@@ -102,9 +101,7 @@ class CategoryImageController extends Controller
           'success' => true,
           'code' => 200,
           'message' => 'Category image updated successfully',
-          'data' => [
-            $category
-          ]
+          'data' => $category 
         ], 200);
     }
 }
