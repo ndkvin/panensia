@@ -20,9 +20,7 @@ class CategoryController extends Controller
           'success' => true,
           'code' => 200,
           'message' => 'Category list',
-          'data' => [
-            Category::all()
-          ]
+          'data' => Category::all()
         ]);
     }
 
@@ -84,9 +82,7 @@ class CategoryController extends Controller
           'success' => true,
           'code' => 201,
           'message' => 'Category created successfully',
-          'data' => [
-            'category' => $category
-          ]
+          'data' =>  $category
         ], 201);
     }
 
@@ -99,9 +95,8 @@ class CategoryController extends Controller
           'success' => true,
           'code' => 200,
           'message' => 'Category details',
-          'data' => [
-            $category
-          ]
+          'data' => $category
+          
         ]);
     }
 
@@ -151,9 +146,8 @@ class CategoryController extends Controller
         'success' => true,
         'code' => 200,
         'message' => 'Category updated successfully',
-        'data' => [
-          $category
-        ]
+        'data' => $category
+        
       ], 200);
     }
 
