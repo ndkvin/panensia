@@ -17,6 +17,6 @@ Route::get('/', function () {
     return response()->json([
       'status' => 'success',
       'code' => 200,
-      'message' => ['Welcome to the API']
+      'message' => 'Welcome to the API'
     ]);
 });

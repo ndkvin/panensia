@@ -31,6 +31,8 @@ class CategoryController extends Controller
     {
         // 
     }
+
+    
     function createUniqueSlug($input)
     {
       $slug = Str::slug($input);
@@ -52,7 +54,7 @@ class CategoryController extends Controller
     {
         // validate the request
         $validate = Validator::make($request->all(), [
-          'name' => 'required|min:3|max:55|unique:categories,name'
+          'name' => 'required|min:3|max:55|string|unique:categories,name'
         ]);
 
         if ($validate->fails()) {
@@ -114,7 +116,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
       $validate = Validator::make($request->all(), [
-        'name' => 'required|min:3|max:55|unique:categories,name,' . $category->id,
+        'name' => 'required|min:3|max:55|string|unique:categories,name,' . $category->id,
       ]);
 
       if ($validate->fails()) {

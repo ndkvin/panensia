@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryImageController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -42,4 +43,6 @@ Route::group([
     ->except(['edit', 'create']);
   Route::post('category/{category}/image', [CategoryImageController::class, 'store']);
   Route::post('category/{category}/image/edit', [CategoryImageController::class, 'update']);
+  Route::resource('product', ProductController::class)
+    ->except(['edit', 'create']);
 });
