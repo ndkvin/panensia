@@ -12,4 +12,9 @@ class ProductImage extends Model
     protected  $guarded = [
         'id'
     ];
+
+    public function getImageAttribute($value)
+    {
+        return $value == null ? null : asset('storage/' . $value);
+    }
 }

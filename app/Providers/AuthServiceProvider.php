@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     {
       Passport::tokensExpireIn(now()->addMonth(12));
       Passport::refreshTokensExpireIn(now()->addDays(30));
-      Passport::personalAccessTokensExpireIn(now()->addDay(12));
+      Passport::personalAccessTokensExpireIn(now()->addDay(3));
 
       Gate::define('admin', function (User $user) {
         return $user->role == 'admin';

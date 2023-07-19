@@ -13,7 +13,7 @@ class Product extends Model
         'id'
     ];
 
-    public function order() {
-      
+    public function category() {
+        return $this->belongsTo(Category::class);
     }
 }

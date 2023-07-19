@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryImageController;
-use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -34,15 +32,15 @@ Route::get('/unauthorize', function () {
 Route::group([
   'middleware' => ['auth:api', 'can:admin'],
   'prefix' => 'admin',
-  'as' => 'admin',
+  'as' => 'admin.',
   'namespace' => 'App\Http\Controllers\Admin'
 ], function () {
 
   // category
-  Route::resource('category', CategoryController::class)
-    ->except(['edit', 'create']);
-  Route::post('category/{category}/image', [CategoryImageController::class, 'store']);
-  Route::post('category/{category}/image/edit', [CategoryImageController::class, 'update']);
-  Route::resource('product', ProductController::class)
-    ->except(['edit', 'create']);
+  Route::resource('category', CategoryController::class)->except(['edit', 'create']);
+  Route::post('category/{category}/image', [App\Http\Controllers\Admin\CategoryImageController::class, 'store']);
+  Route::post('category/{category}/image/edit', [App\Http\Controllers\Admin\CategoryImageController::class, 'update']);
+  Route::resource('product', App\Http\Controllers\Admin\ProductController::class)->except(['edit', 'create']);
+  Route::resource('/product/{product}/image', App\Http\Controllers\Admin\ProductImageController::class)->only(['store', 'destroy']);
+  Route::resource('/product/{product}/type',App\Http\Controllers\Admin\ProductTypeController::class)->only(['store', 'destroy', 'update']);
 });
