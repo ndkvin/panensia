@@ -33,10 +33,7 @@ Route::group([
   'middleware' => ['auth:api', 'can:admin'],
   'prefix' => 'admin',
   'as' => 'admin.',
-  'namespace' => 'App\Http\Controllers\Admin'
 ], function () {
-
-  // category
   Route::resource('category', CategoryController::class)->except(['edit', 'create']);
   Route::post('category/{category}/image', [App\Http\Controllers\Admin\CategoryImageController::class, 'store']);
   Route::post('category/{category}/image/edit', [App\Http\Controllers\Admin\CategoryImageController::class, 'update']);
@@ -44,3 +41,15 @@ Route::group([
   Route::resource('/product/{product}/image', App\Http\Controllers\Admin\ProductImageController::class)->only(['store', 'destroy']);
   Route::resource('/product/{product}/type',App\Http\Controllers\Admin\ProductTypeController::class)->only(['store', 'destroy', 'update']);
 });
+
+Route::group([
+  'middleware' => ['auth:api', 'can:user'],
+  'prefix' => 'user',
+  'as' => 'user.',
+], function () {
+  
+});
+
+
+Route::get('/product', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/product/{product}', [App\Http\Controllers\HomeController::class, 'show']);

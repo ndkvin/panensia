@@ -17,4 +17,8 @@ class ProductImage extends Model
     {
         return $value == null ? null : asset('storage/' . $value);
     }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 }

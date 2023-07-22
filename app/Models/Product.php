@@ -13,7 +13,19 @@ class Product extends Model
         'id'
     ];
 
+    public function scopeName($query, $request) {
+        return $request->input('name') ? $query->where('name', 'like', '%' . $request->input('name') . '%') : $query;
+    }
+
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    public function images() {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function types() {
+      return $this->hasMany(ProductType::class);
+  }
 }

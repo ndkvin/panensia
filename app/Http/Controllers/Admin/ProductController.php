@@ -17,26 +17,33 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-          ->select('products.id', 'products.name','products.slug','products.description','categories.name as category_name')
-          ->get();
+      $products = Product::with(
+          [
+            'images' => function ($query) {
+              $query->first();
+            },
+            'types' => function ($query) {
+              $query->first();
+            },
+          ]
+        )
+        ->select('id', 'name')
+        ->get();
+          
+      foreach ($products as $product) {
+        $product->image = isset($product->images[0]->image) ? $product->images[0]->image : null;
+        $product->price = isset($product->types[0]->price) ? $product->types[0]->price : null;
 
-        foreach($products as $product) {
-          $image = ProductImage::where('product_id', $product->id)->first();
-          $image = $image == null ? null : $image->image;
-          $product->image =  $image;
+        unset($product->images);
+        unset($product->types);
+      }
 
-          $product->types =  ProductType::where('product_id', $product->id)
-              ->select('name', 'price', 'weight', 'stock')
-              ->get();
-        }
-
-        return response()->json([
+      return response()->json([
           'success' => true,
           'code' => 200,
-          'message' => 'Product list',
-          'data' => $products,
-        ]);
+          'message' => 'OK',
+          'data' => $products
+      ], 200);
     }
 
     /**
@@ -112,16 +119,21 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product->images = ProductImage::where('product_id', $product->id)
-          ->select('id', 'image')
-          ->get();
+        $product = $product->with([
+            'images',
+            'types'
+        ])
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->where('products.id', $product->id)
+        ->select('products.id', 'products.name','products.slug','products.description','categories.name as category_name')
+        ->get();
 
         return response()->json([
-          'success' => true,
-          'code' => 200,
-          'message' => 'Product detail',
-          'data' => $product
-        ]);
+            'success' => true,
+            'code' => 200,
+            'message' => 'OK',
+            'data' => $product
+        ], 200);
     }
 
     /**
