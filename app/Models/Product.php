@@ -13,8 +13,16 @@ class Product extends Model
         'id'
     ];
 
-    public function scopeName($query, $request) {
-        return $request->input('name') ? $query->where('name', 'like', '%' . $request->input('name') . '%') : $query;
+    public function scopeSearch($query, $request) {
+        if($request->input('category')) {
+            $query = $query->where('category_id', $request->input('category'));
+        };
+
+        if($request->input('name')) {
+            $query = $query->where('name', 'like', '%' . $request->input('name') . '%');
+        };
+
+        return $query;
     }
 
     public function category() {

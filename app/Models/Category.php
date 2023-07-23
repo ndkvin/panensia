@@ -13,6 +13,11 @@ class Category extends Model
         'id'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function getImageAttribute($value)
     {
         return $value == null ? null : asset('storage/' . $value);

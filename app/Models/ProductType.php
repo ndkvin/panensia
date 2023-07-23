@@ -13,6 +13,12 @@ class ProductType extends Model
         'id'
     ];
 
+    protected $hidden = [
+        'image',
+        'created_at',
+        'updated_at'
+    ];
+
     public function product() {
         return $this->belongsTo(Product::class);
     }

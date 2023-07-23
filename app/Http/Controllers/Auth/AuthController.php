@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Models\AccessToken;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +47,6 @@ class AuthController extends Controller
       'code' => 200,
       'message' => 'User created successfully',
       'data' => [
-        'user' => $user,
         'access_token' => $accessToken
       ]
     ]);
@@ -93,7 +92,6 @@ class AuthController extends Controller
         'code' => 200,
         'message' => 'User login successfully',
         'data' => [
-          'user' => auth()->user(),
           'access_token' => $accessToken
         ]
       ]

@@ -14,13 +14,21 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $categories = Category::paginate($request->input('per_page', 10));
+
         return response()->json([
           'success' => true,
           'code' => 200,
           'message' => 'Category list',
-          'data' => Category::all()
+          'data' => $categories->items(),
+            'pagination' => [
+              'current_page' => $categories->currentPage(),
+              'last_page' => $categories->lastPage(),
+              'per_page' => $categories->perPage(),
+              'total' => $categories->total(),
+            ]
         ]);
     }
 

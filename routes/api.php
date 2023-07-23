@@ -15,9 +15,9 @@ use App\Models\User;
 |
 */
 
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->middleware('auth:api');
+Route::post('/register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
+Route::get('/profile', [App\Http\Controllers\Auth\AuthController::class, 'profile'])->middleware('auth:api');
 
 Route::get('/unauthorize', function () {
   return response()->json([
@@ -47,9 +47,9 @@ Route::group([
   'prefix' => 'user',
   'as' => 'user.',
 ], function () {
-  
+  Route::resource('cart', App\Http\Controllers\User\CartController::class)->except(['edit', 'create', 'show']);
 });
 
-
-Route::get('/product', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/product/{product}', [App\Http\Controllers\HomeController::class, 'show']);
+Route::get('/product', [App\Http\Controllers\HomeController::class, 'product']);
+Route::get('/product/{product}', [App\Http\Controllers\HomeController::class, 'showProduct']);
+Route::get('/category', [App\Http\Controllers\HomeController::class, 'category']);

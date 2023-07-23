@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request) {
-        $products = Product::name($request)
+    public function product(Request $request) {
+        $products = Product::search($request)
           ->with(
             [
               'images' => function ($query) {
@@ -21,8 +22,8 @@ class HomeController extends Controller
             ]
           )
           ->select('id', 'name')
-          ->get();
-        
+          ->paginate($request->input('per_page', 8));
+
         foreach ($products as $product) {
           $product->image = isset($product->images[0]->image) ? $product->images[0]->image : null;
           $product->price = isset($product->types[0]->price) ? $product->types[0]->price : null;
@@ -35,11 +36,17 @@ class HomeController extends Controller
             'success' => true,
             'code' => 200,
             'message' => 'OK',
-            'data' => $products
+            'data' => $products->items(),
+            'pagination' => [
+              'current_page' => $products->currentPage(),
+              'last_page' => $products->lastPage(),
+              'per_page' => $products->perPage(),
+              'total' => $products->total(),
+            ]
         ], 200);
     }
 
-    public function show(Product $product) {
+    public function showProduct(Product $product) {
         $product = $product->with([
             'images',
             'types'
@@ -54,6 +61,17 @@ class HomeController extends Controller
             'code' => 200,
             'message' => 'OK',
             'data' => $product
+        ], 200);
+    }
+
+    public function category() {
+        $categories = Category::all();
+
+        return response()->json([
+            'success' => true,
+            'code' => 200,
+            'message' => 'OK',
+            'data' => $categories
         ], 200);
     }
 }

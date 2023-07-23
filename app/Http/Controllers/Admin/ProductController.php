@@ -15,7 +15,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
       $products = Product::with(
           [
@@ -28,7 +28,7 @@ class ProductController extends Controller
           ]
         )
         ->select('id', 'name')
-        ->get();
+        ->paginate($request->input('per_page', 10));
           
       foreach ($products as $product) {
         $product->image = isset($product->images[0]->image) ? $product->images[0]->image : null;
@@ -42,7 +42,13 @@ class ProductController extends Controller
           'success' => true,
           'code' => 200,
           'message' => 'OK',
-          'data' => $products
+          'data' => $products->items(),
+          'pagination' => [
+              'current_page' => $products->currentPage(),
+              'last_page' => $products->lastPage(),
+              'per_page' => $products->perPage(),
+              'total' => $products->total(),
+          ]
       ], 200);
     }
 
