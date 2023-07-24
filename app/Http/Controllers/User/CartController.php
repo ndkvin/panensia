@@ -15,7 +15,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
+        $carts = Cart::where('user_id', auth()->user()->id)->select('id', 'product_type_id', 'quantity')->get();
 
         foreach($carts as $cart) {
             $productType = ProductType::find($cart->product_type_id);
@@ -47,7 +47,6 @@ class CartController extends Controller
         $validate = Validator::make($request->all(), [
           'product_type_id' => 'required|exists:product_types,id',
         ]);
-        
 
         if ($validate->fails()) {
           $errors = $validate->errors();
@@ -68,7 +67,6 @@ class CartController extends Controller
         $productType = ProductType::find($request->product_type_id);
 
         $cart = Cart::where('user_id', auth()->user()->id)->where('product_type_id', $request->product_type_id)->first();
-
 
         // if stock is 0
         if($productType->stock == 0) {

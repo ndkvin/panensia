@@ -48,6 +48,10 @@ Route::group([
   'as' => 'user.',
 ], function () {
   Route::resource('cart', App\Http\Controllers\User\CartController::class)->except(['edit', 'create', 'show']);
+  Route::resource('order', App\Http\Controllers\User\OrderController::class)->except(['edit', 'create', 'destroy', 'update']);
+  Route::resource('payment', App\Http\Controllers\User\PaymentController::class)->except(['edit', 'create', 'show']);
+  Route::post('/payment/available', [App\Http\Controllers\User\PaymentController::class, 'available']);
+  Route::resource('address', App\Http\Controllers\User\AddressController::class)->except(['edit', 'create']);
 });
 
 Route::get('/product', [App\Http\Controllers\HomeController::class, 'product']);

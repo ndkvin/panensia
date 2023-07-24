@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderProduct extends Model
+class UserAddress extends Model
 {
     use HasFactory;
 
-    protected  $guarded = [
+    protected $guarded = [
         'id'
     ];
 
@@ -17,8 +17,4 @@ class OrderProduct extends Model
       'created_at',
       'updated_at'
     ];
-
-    public function order() {
-        return $this->belongsTo(Order::class);
-    }
 }
