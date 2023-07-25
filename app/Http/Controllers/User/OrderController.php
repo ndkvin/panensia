@@ -130,8 +130,9 @@ class OrderController extends Controller
                 $productType->save();
             }
 
-            if($total < Config::where('key', 'minimum_va')->first()->value && PaymentMethod::find($request->payment)->minimum) {
+            if($total < intval(Config::where('key', 'minimum_va')->first()->value) && PaymentMethod::find($request->payment)->minimum) {
                 DB::rollBack();
+                
                 return response([
                   'success' => false,
                   'code' => 422,
