@@ -13,10 +13,12 @@ class ProductTypeController extends Controller
     public function store(Request $request, Product $product)
     {
       $validate = Validator::make($request->all(), [
-        '*.name' => 'required|string|max:255',
-        '*.price' => 'required|numeric',
-        '*.weight' => 'required|numeric',
-        '*.stock' => 'required|integer',
+
+        "types" => "required|array",
+        'types.*.name' => 'required|string|max:255',
+        'types.*.price' => 'required|numeric',
+        'types.*.weight' => 'required|numeric',
+        'types.*.stock' => 'required|integer',
       ]);
 
       if ($validate->fails()) {
@@ -36,7 +38,7 @@ class ProductTypeController extends Controller
       }
       
       $data = [];
-      foreach($request->all() as $request) {
+      foreach($request->types as $request) {
         $data[] = ProductType::create([
           'name' => $request['name'],
           'price' => $request['price'],

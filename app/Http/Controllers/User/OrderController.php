@@ -4,12 +4,15 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Config;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\PaymentMethod;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -77,54 +80,85 @@ class OrderController extends Controller
         }
 
         DB::beginTransaction();
-        
-        $order = Order::create([
-            'user_id' => auth()->user()->id,
-            'invoice' => '123123',
-            'payment_ref' => '123123',
-            'total' => 123123,
-            'payment_method' => $request->payment,
-            'address' => $request->address['address'],
-            'street' => $request->address['street'],
-            'city' => $request->address['city'],
-            'province' => $request->address['province'],
-            'postal_code' => $request->address['postal_code'],
-            'phone' => $request->address['phone'],
-            'status' => 'UNPAID',
-        ]);
 
-        foreach($request->items as $item) {
-            $productType = ProductType::find($item['product_type_id']);
+        try {
+            $order = Order::create([
+                'user_id' => auth()->user()->id,
+                'invoice' => 'INV-' . strtoupper(Str::random(6)),
+                'payment_ref' => '123123',
+                'total' => 0,
+                'payment_method_id' => $request->payment,
+                'address' => $request->address['address'],
+                'street' => $request->address['street'],
+                'city' => $request->address['city'],
+                'province' => $request->address['province'],
+                'postal_code' => $request->address['postal_code'],
+                'phone' => $request->address['phone'],
+                'status' => 'UNPAID',
+            ]);
+            
+            $total = 0;
 
-            if ($productType->stock < $item['quantity']) {
-                $product = ProductType::with('product')->find($item['product_type_id']);
-                $name = $product->product->name;
-                DB::rollBack();
+            foreach($request->items as $item) {
+                $productType = ProductType::find($item['product_type_id']);
 
-                return response()->json([
-                    'success' => false,
-                    'code' => 422,
-                    'message' => 'Unprocessable Entity',
-                    'errors' => ["Stock $name not enough"]
-                ], 422);
+                if ($productType->stock < $item['quantity']) {
+                    $product = ProductType::with('product')->find($item['product_type_id']);
+                    $name = $product->product->name;
+                    DB::rollBack();
+
+                    return response()->json([
+                        'success' => false,
+                        'code' => 422,
+                        'message' => 'Unprocessable Entity',
+                        'errors' => ["Stock $name not enough"]
+                    ], 422);
+                }
+
+                OrderProduct::create([
+                  'order_id' => $order->id,
+                  'product_type_id' => $item['product_type_id'],
+                  'quantity' => $item['quantity'],
+                ]);
+                $total += $productType->price * $item['quantity'];
+
+                Cart::where('user_id', auth()->user()->id)
+                    ->where('product_type_id', $item['product_type_id'])
+                    ->delete();
+
+                $productType->stock -= $item['quantity'];
+                $productType->save();
             }
 
-            OrderProduct::create([
-              'order_id' => $order->id,
-              'product_type_id' => $item['product_type_id'],
-              'quantity' => $item['quantity'],
+            if($total < Config::where('key', 'minimum_va')->first()->value && PaymentMethod::find($request->payment)->minimum) {
+                DB::rollBack();
+                return response([
+                  'success' => false,
+                  'code' => 422,
+                  'message' => 'Unprocessable Entity',
+                  'errors' => ['Minimum payment to use va is ' . Config::where('key', 'minimum_va')->first()->value]
+                ]);
+            }
+
+            $order->total = $total;
+            $order->save();
+
+            DB::commit();
+            
+            return response()->json([
+              'success' => true,
+              'code' => 201,
+              'message' => 'Created',
+              'data' => $order
             ]);
-
-            Cart::where('user_id', auth()->user()->id)
-                ->where('product_type_id', $item['product_type_id'])
-                ->delete();
-
-            $productType->stock -= $item['quantity'];
-            $productType->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+              'success' => false,
+              'code' => 500,
+              'message' => 'Internal Server Error',
+            ]);
         }
-
-        DB::commit();
-        return 'success';
     }
 
     /**

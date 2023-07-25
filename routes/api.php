@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +32,7 @@ Route::group([
   'prefix' => 'admin',
   'as' => 'admin.',
 ], function () {
-  Route::resource('category', CategoryController::class)->except(['edit', 'create']);
+  Route::resource('category', App\Http\Controllers\Admin\CategoryController::class)->except(['edit', 'create']);
   Route::post('category/{category}/image', [App\Http\Controllers\Admin\CategoryImageController::class, 'store']);
   Route::post('category/{category}/image/edit', [App\Http\Controllers\Admin\CategoryImageController::class, 'update']);
   Route::resource('product', App\Http\Controllers\Admin\ProductController::class)->except(['edit', 'create']);
@@ -49,7 +47,8 @@ Route::group([
 ], function () {
   Route::resource('cart', App\Http\Controllers\User\CartController::class)->except(['edit', 'create', 'show']);
   Route::resource('order', App\Http\Controllers\User\OrderController::class)->except(['edit', 'create', 'destroy', 'update']);
-  Route::resource('payment', App\Http\Controllers\User\PaymentController::class)->except(['edit', 'create', 'show']);
+  Route::resource('order/{order}/payment', App\Http\Controllers\User\PaymentController::class)->only(['index', 'store']);
+  Route::post('order/{order}/payment/image', [App\Http\Controllers\User\PaymentController::class, 'storeImage']);
   Route::post('/payment/available', [App\Http\Controllers\User\PaymentController::class, 'available']);
   Route::resource('address', App\Http\Controllers\User\AddressController::class)->except(['edit', 'create']);
 });

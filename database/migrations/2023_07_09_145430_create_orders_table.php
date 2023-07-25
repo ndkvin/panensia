@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
+            $table->unsignedBigInteger('payment_method_id');
             $table->string('invoice');
             $table->string('status');
             $table->integer('total');
             $table->string('payment_ref');
-            $table->string('payment_method');
             $table->string('address');
             $table->string('street');
             $table->string('city');
