@@ -15,10 +15,17 @@ class OrderProduct extends Model
 
     protected $hidden = [
       'created_at',
-      'updated_at'
+      'updated_at',
+      'order_id',
+      'product_type_id',
+      'id'
     ];
 
     public function order() {
         return $this->belongsTo(Order::class);
+    }
+
+    public function productType() {
+        return $this->belongsTo(ProductType::class);
     }
 }

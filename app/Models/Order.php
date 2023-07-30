@@ -13,7 +13,31 @@ class Order extends Model
         'id'
     ];
 
+    public function scopeSearch($query, $request) {
+        if($request->input('status')) {
+            $query = $query->where('status', $request->input('status'));
+        };
+
+        if($request->input('invoice')) {
+            $query = $query->where('invoice', 'like', '%' . $request->input('invoice') . '%');
+        };
+
+        return $query;
+    }
+
     public function orderProducts() {
         return $this->hasMany(OrderProduct::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function paymentMethod() {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function payment() {
+        return $this->hasOne(Payment::class);
     }
 }

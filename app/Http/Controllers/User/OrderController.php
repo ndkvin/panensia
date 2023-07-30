@@ -119,6 +119,7 @@ class OrderController extends Controller
                   'order_id' => $order->id,
                   'product_type_id' => $item['product_type_id'],
                   'quantity' => $item['quantity'],
+                  'item_price' => $productType->price,
                 ]);
                 $total += $productType->price * $item['quantity'];
 
@@ -132,7 +133,7 @@ class OrderController extends Controller
 
             if($total < intval(Config::where('key', 'minimum_va')->first()->value) && PaymentMethod::find($request->payment)->minimum) {
                 DB::rollBack();
-                
+
                 return response([
                   'success' => false,
                   'code' => 422,
@@ -178,7 +179,7 @@ class OrderController extends Controller
           'orderProducts' => function($query) {
             $query->join('product_types', 'order_products.product_type_id', '=', 'product_types.id')
                   ->join('products', 'product_types.product_id', '=', 'products.id')
-                  ->select('order_products.*','product_types.price', 'products.name');
+                  ->select('order_products.*', 'products.name');
           },
         ])->where('id', $order->id)->first();
 
