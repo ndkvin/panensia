@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Admin\Midtrans;
 
 use App\Models\Config as ModelsConfig;
 use App\Models\Order;
-
+use \Midtrans\Config;
+use \Midtrans\Snap;
+use \Midtrans\Notification;
 class Midtrans
 {
     public $config;
 
     public static function createPayment($invoice, $total)
     {
-        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        \Midtrans\Config::$isProduction = false;
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
+        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        Config::$isProduction = false;
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
 
         $enabled_payment = $total < ModelsConfig::where('key', 'minimum_va')->first()->value ? ["shopeepay"] : ["permata_va", "bca_va", "bni_va", "other_va", "shopeepay"];
 
@@ -33,14 +35,14 @@ class Midtrans
             'enabled_payments' => $enabled_payment,
         );
 
-        return \Midtrans\Snap::createTransaction($params);
+        return Snap::createTransaction($params);
     }
 
     public static function callback()
     {
-        \Midtrans\Config::$isProduction = false;
-        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        $notif = new \Midtrans\Notification();
+        Config::$isProduction = false;
+        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        $notif = new Notification();
 
         $transaction = $notif->transaction_status;
         $type = $notif->payment_type;
