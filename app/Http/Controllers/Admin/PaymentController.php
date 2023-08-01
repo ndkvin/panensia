@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Midtrans\Midtrans;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    /**
+     * callback notify
+     */
+    public function callback(Request $request) {
+        Midtrans::callback();
+    }
     /**
      * Display a listing of the resource.
      */

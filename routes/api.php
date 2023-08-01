@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 Route::get('/profile', [App\Http\Controllers\Auth\AuthController::class, 'profile'])->middleware('auth:api');
+Route::post('/payment/callback', [App\Http\Controllers\Admin\PaymentController::class, 'callback']);
 
 Route::get('/unauthorize', function () {
   return response()->json([

@@ -133,21 +133,10 @@ class OrderController extends Controller
                 $productType->save();
             }
 
-            if($total < intval(Config::where('key', 'minimum_va')->first()->value) && $request->payment == 2) {
-                DB::rollBack();
-
-                return response([
-                  'success' => false,
-                  'code' => 422,
-                  'message' => 'Unprocessable Entity',
-                  'errors' => ['Minimum payment to use va is ' . Config::where('key', 'minimum_va')->first()->value]
-                ]);
-            }
-
             if($request->payment == 2) {
                 $response = Midtrans::createPayment($order->invoice, $total);
 
-                $order->payment_ref = $response['token'];
+                $order->payment_ref = $response->token;
                 $order->total = $total;
 
                 $order->save();
