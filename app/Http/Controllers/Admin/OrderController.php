@@ -63,8 +63,7 @@ class OrderController extends Controller
             },
         ])
         ->join('users', 'orders.user_id', '=', 'users.id')
-        ->join('payment_methods', 'orders.payment_method_id', '=', 'payment_methods.id')
-        ->select('orders.id', 'invoice', 'status', 'total', 'orders.created_at', 'payment_method_id', 'users.name as user_name', 'payment_methods.name as payemnt_method')
+        ->select('orders.id', 'invoice', 'status', 'total', 'orders.created_at', 'payment_method', 'users.name as user_name')
         ->where('orders.id', $order->id)
         ->first();
 

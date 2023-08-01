@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Admin\Midtrans\Midtrans;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Config;
@@ -60,7 +61,7 @@ class OrderController extends Controller
             'address.province' => 'required|string',
             'address.postal_code' => 'required|numeric',
             'address.phone' => 'required|string|min:10|max:13',
-            'payment' => 'required|numeric|in:1,2,3,4,5,6'
+            'payment' => 'required|numeric|in:1,2',
         ]);
 
         if ($validate->fails()) {
@@ -81,13 +82,14 @@ class OrderController extends Controller
 
         DB::beginTransaction();
 
+        $payment_method = $request->payment == 1 ? "MANUAL" : "MIDTRANS";
         try {
             $order = Order::create([
                 'user_id' => auth()->user()->id,
                 'invoice' => 'INV-' . strtoupper(Str::random(6)),
-                'payment_ref' => '123123',
+                'payment_ref' => '0',
                 'total' => 0,
-                'payment_method_id' => $request->payment,
+                'payment_method' => $payment_method,
                 'address' => $request->address['address'],
                 'street' => $request->address['street'],
                 'city' => $request->address['city'],
@@ -131,7 +133,7 @@ class OrderController extends Controller
                 $productType->save();
             }
 
-            if($total < intval(Config::where('key', 'minimum_va')->first()->value) && PaymentMethod::find($request->payment)->minimum) {
+            if($total < intval(Config::where('key', 'minimum_va')->first()->value) && $request->payment == 2) {
                 DB::rollBack();
 
                 return response([
@@ -139,6 +141,27 @@ class OrderController extends Controller
                   'code' => 422,
                   'message' => 'Unprocessable Entity',
                   'errors' => ['Minimum payment to use va is ' . Config::where('key', 'minimum_va')->first()->value]
+                ]);
+            }
+
+            if($request->payment == 2) {
+                $response = Midtrans::createPayment($order->invoice, $total);
+
+                $order->payment_ref = $response['token'];
+                $order->total = $total;
+
+                $order->save();
+
+                DB::commit();
+
+                return response()->json([
+                  'success' => true,
+                  'code' => 201,
+                  'message' => 'Created',
+                  'data' => [
+                    'order' => $order,
+                    'payment' => $response
+                  ],
                 ]);
             }
 
@@ -151,7 +174,9 @@ class OrderController extends Controller
               'success' => true,
               'code' => 201,
               'message' => 'Created',
-              'data' => $order
+              'data' => [
+                'order' => $order,
+              ]
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

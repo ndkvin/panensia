@@ -13,33 +13,33 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        PaymentMethod::create([
-            'name' => 'Manual Trasfer',
-        ]);
+        // PaymentMethod::create([
+        //     'name' => 'Manual Trasfer',
+        // ]);
 
-        PaymentMethod::create([
-          'name' => 'QRIS',
-        ]);
+        // PaymentMethod::create([
+        //   'name' => 'QRIS',
+        // ]);
 
-        PaymentMethod::create([
-          'name' => 'BCA VA',
-          'minimum' => true
-        ]);
+        // PaymentMethod::create([
+        //   'name' => 'BCA VA',
+        //   'minimum' => true
+        // ]);
 
-        PaymentMethod::create([
-          'name' => 'BRI VA',
-          'minimum' => true
-        ]);
+        // PaymentMethod::create([
+        //   'name' => 'BRI VA',
+        //   'minimum' => true
+        // ]);
 
-        PaymentMethod::create([
-          'name' => 'BNI VA',
-          'minimum' => true
-        ]);
+        // PaymentMethod::create([
+        //   'name' => 'BNI VA',
+        //   'minimum' => true
+        // ]);
 
-        PaymentMethod::create([
-          'name' => 'Mandiri VA',
-          'minimum' => true
-        ]);
+        // PaymentMethod::create([
+        //   'name' => 'Mandiri VA',
+        //   'minimum' => true
+        // ]);
 
     }
 }
