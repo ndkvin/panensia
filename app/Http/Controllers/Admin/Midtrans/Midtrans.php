@@ -7,6 +7,7 @@ use App\Models\Order;
 use \Midtrans\Config;
 use \Midtrans\Snap;
 use \Midtrans\Notification;
+
 class Midtrans
 {
     public $config;

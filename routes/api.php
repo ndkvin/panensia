@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
-Route::get('/profile', [App\Http\Controllers\Auth\AuthController::class, 'profile'])->middleware('auth:api');
+Route::group([
+  'middleware' => ['guest'],
+], function () {
+  Route::post('/register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
+  Route::post('/login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
+  Route::post('/forget', [App\Http\Controllers\Auth\ResetPasswordController::class, 'sendOtp']);
+  Route::put('/forget', [App\Http\Controllers\Auth\ResetPasswordController::class, 'changePassword']);
+});
+
 Route::post('/payment/callback', [App\Http\Controllers\Admin\PaymentController::class, 'callback']);
 
 Route::get('/unauthorize', function () {
@@ -29,6 +35,15 @@ Route::get('/unauthorize', function () {
 })->name('login');
 
 Route::group([
+  'middleware' => ['auth:api'],
+  'prefix' => 'auth',
+  'as' => 'auth.',
+], function () {
+  Route::get('/profile', [App\Http\Controllers\Auth\AuthController::class, 'profile']);
+  Route::put('/password', [App\Http\Controllers\Auth\AuthController::class, 'changePassword']);
+});
+
+Route::group([
   'middleware' => ['auth:api', 'can:admin'],
   'prefix' => 'admin',
   'as' => 'admin.',
@@ -38,7 +53,7 @@ Route::group([
   Route::post('category/{category}/image/edit', [App\Http\Controllers\Admin\CategoryImageController::class, 'update']);
   Route::resource('product', App\Http\Controllers\Admin\ProductController::class)->except(['edit', 'create']);
   Route::resource('/product/{product}/image', App\Http\Controllers\Admin\ProductImageController::class)->only(['store', 'destroy']);
-  Route::resource('/product/{product}/type',App\Http\Controllers\Admin\ProductTypeController::class)->only(['store', 'destroy', 'update']);
+  Route::resource('/product/{product}/type', App\Http\Controllers\Admin\ProductTypeController::class)->only(['store', 'destroy', 'update']);
   Route::resource('order', App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show']);
   Route::resource('payment', App\Http\Controllers\Admin\PaymentController::class)->only(['index', 'show', 'update']);
 });
