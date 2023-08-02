@@ -39,8 +39,9 @@ Route::group([
   'prefix' => 'auth',
   'as' => 'auth.',
 ], function () {
-  Route::get('/profile', [App\Http\Controllers\Auth\AuthController::class, 'profile']);
-  Route::put('/password', [App\Http\Controllers\Auth\AuthController::class, 'changePassword']);
+  Route::get('/profile', [App\Http\Controllers\Auth\ProfileController::class, 'profile']);
+  Route::put('/password', [App\Http\Controllers\Auth\ProfileController::class, 'changePassword']);
+  Route::put('/profile', [App\Http\Controllers\Auth\ProfileController::class, 'updateProfile']);
 });
 
 Route::group([
