@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::paginate($request->input('per_page', 10));
+        $categories = Category::search($request)->paginate($request->input('per_page', 10));
 
         return response()->json([
           'success' => true,
