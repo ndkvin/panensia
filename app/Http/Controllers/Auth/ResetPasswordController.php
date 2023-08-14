@@ -76,7 +76,7 @@ class ResetPasswordController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 500,
-                'message' => $e->getMessage(),
+                'message' => "Internal server error"
             ], 500);
         }
         return response()->json([
