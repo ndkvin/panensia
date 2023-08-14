@@ -41,13 +41,14 @@ class ResetPasswordController extends Controller
         $user = User::where('email', $request->email)->first();
 
         $otpDb = ResetPasswordOtp::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
-
-        if($otpDb->next_send > Carbon::now()) {
-            return response()->json([
-                'success' => false,
-                'code' => 400,
-                'message' => "next otp send at {$otpDb->next_send}",
-            ], 400);
+        if($otpDb) {
+            if($otpDb->next_send > Carbon::now()) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 400,
+                    'message' => "next otp send at {$otpDb->next_send}",
+                ], 400);
+            }
         }
 
         $otp = rand(100000, 999999);
@@ -66,6 +67,8 @@ class ResetPasswordController extends Controller
                 'next_send' => Carbon::now()->addMinutes(10),
             ]);
 
+            Mail::to($user->email)->send(new ForgetPassword($otp));
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -73,12 +76,9 @@ class ResetPasswordController extends Controller
             return response()->json([
                 'success' => false,
                 'code' => 500,
-                'message' => 'Internal Server Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
-
-        Mail::to($user->email)->send(new ForgetPassword($otp));
-
         return response()->json([
             'success' => true,
             'code' => 200,
