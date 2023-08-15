@@ -1551,9 +1551,80 @@
                                             "description": "response message"
                                         },
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Product ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Product name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Product Slug"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "description": "Product description"
+                                                },
+                                                "category_name": {
+                                                    "type": "string",
+                                                    "description": "Product categiory id"
+                                                },
+                                                "images": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "description": "Image ID"
+                                                            },
+                                                            "product_id": {
+                                                                "type": "integer",
+                                                                "description": "Product ID"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "description": "url to image"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "types": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "description": "Type ID"
+                                                            },
+                                                            "product_id": {
+                                                                "type": "integer",
+                                                                "description": "Product ID"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "description": "Type name"
+                                                            },
+                                                            "price": {
+                                                                "type": "integer",
+                                                                "description": "Type price"
+                                                            },
+                                                            "stock": {
+                                                                "type": "integer",
+                                                                "description": "Type stock"
+                                                            },
+                                                            "weight": {
+                                                                "type": "integer",
+                                                                "description": "Type weight"
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1562,32 +1633,30 @@
                                     "success": true,
                                     "code": 200,
                                     "message": "OK",
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "name": "banana",
-                                            "slug": "banana",
-                                            "description": "Fresh banana",
-                                            "category_name": "fruit",
-                                            "images": [
-                                                {
-                                                    "id": 1,
-                                                    "product_id": 1,
-                                                    "image": "http://panensia.id/storage/images/product/X0A6uglBJ9S9nAZMN34DRb8lNj9POd81eegu3d9i.png"
-                                                }
-                                            ],
-                                            "types": [
-                                                {
-                                                    "id": 1,
-                                                    "product_id": 1,
-                                                    "name": "banana",
-                                                    "price": 10000,
-                                                    "stock": 20,
-                                                    "weight": 1
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    "data": {
+                                        "id": 1,
+                                        "name": "banana",
+                                        "slug": "banana",
+                                        "description": "Fresh banana",
+                                        "category_name": "fruit",
+                                        "images": [
+                                            {
+                                                "id": 1,
+                                                "product_id": 1,
+                                                "image": "http://panensia.id/storage/images/product/X0A6uglBJ9S9nAZMN34DRb8lNj9POd81eegu3d9i.png"
+                                            }
+                                        ],
+                                        "types": [
+                                            {
+                                                "id": 1,
+                                                "product_id": 1,
+                                                "name": "banana",
+                                                "price": 10000,
+                                                "stock": 20,
+                                                "weight": 1
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -1644,7 +1713,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Category Created",
+                        "description": "Product Updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1677,9 +1746,17 @@
                                                     "type": "string",
                                                     "description": "Category Slug"
                                                 },
-                                                "image": {
+                                                "category_id": {
                                                     "type": "string",
-                                                    "description": "url to category image"
+                                                    "description": "Category categiory id"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "description": "Category creating time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "description": "Category updating time"
                                                 }
                                             }
                                         }
@@ -1687,12 +1764,16 @@
                                 },
                                 "example": {
                                     "success": true,
-                                    "code": 201,
-                                    "message": "Category updated successfully",
+                                    "code": 200,
+                                    "message": "Product updated",
                                     "data": {
-                                        "name": "fruit",
-                                        "slug": "fruit",
-                                        "id": 2
+                                        "id": 1,
+                                        "category_id": 2,
+                                        "name": "Banana",
+                                        "slug": "banana-1",
+                                        "description": "Fresh Banana",
+                                        "created_at": "2023-08-15T03:59:54.000000Z",
+                                        "updated_at": "2023-08-15T07:01:52.000000Z"
                                     }
                                 }
                             }

@@ -199,6 +199,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        if($product->orders()->count() > 0) {
+          return response()->json([
+            'success' => false,
+            'code' => 400,
+            'message' => 'Bad Request',
+            'errors' => ['Product cannot be deleted because it has been ordered']
+          ], 400);
+        }
+        
         $product->delete();
 
         return response()->json([
