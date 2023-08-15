@@ -17,7 +17,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-      $products = Product::search($request)->with(
+      $products = Product::search($request)
+        ->with(
           [
             'images' => function ($query) {
               $query->first();
