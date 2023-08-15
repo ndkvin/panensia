@@ -137,10 +137,12 @@
                                 "required": ["email", "password"],
                                 "properties": {
                                     "email": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "User email"
                                     },
                                     "password": {
                                         "type": "string",
+                                        "description": "User password",
                                         "minLength": 8
                                     }
                                 }
@@ -162,19 +164,23 @@
                                     "type": "object",
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
                                         },
                                         "code": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "response code"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "response message"
                                         },
                                         "data": {
                                             "type": "object",
                                             "properties": {
                                                 "access_token": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "Access token to identify user"
                                                 }
                                             }
                                         }
@@ -218,43 +224,55 @@
                                     "type": "object",
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
                                         },
                                         "code": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "response code"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "response message"
                                         },
                                         "data": {
                                             "type": "object",
                                             "properties": {
                                                 "id": {
-                                                    "type": "integer"
+                                                    "type": "integer",
+                                                    "description": "User ID"
                                                 },
                                                 "name": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User name"
                                                 },
                                                 "email": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User email"
                                                 },
                                                 "email_verified_at": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User email verified at"
                                                 },
                                                 "phone": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User phone number"
                                                 },
                                                 "role": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User role"
                                                 },
                                                 "last_login": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User last login"
                                                 },
                                                 "created_at": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User created at"
                                                 },
                                                 "updated_at": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "description": "User updated at"
                                                 }
                                             }
                                         }
@@ -302,15 +320,18 @@
                                     "name": {
                                         "type": "string",
                                         "minLength": 3,
-                                        "maxLength": 55
+                                        "maxLength": 55,
+                                        "description": "User name"
                                     },
                                     "email": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "User email"
                                     },
                                     "phone": {
                                         "type": "string",
                                         "minLength": 10,
-                                        "maxLength": 13
+                                        "maxLength": 13,
+                                        "description": "User phone number"
                                     }
                                 }
                             },
@@ -332,16 +353,20 @@
                                     "type": "object",
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
                                         },
                                         "code": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "response code"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "response message"
                                         },
                                         "data": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "User updated successfully"
                                         }
                                     }
                                 },
@@ -384,11 +409,13 @@
                                 "properties": {
                                     "old_password": {
                                         "type": "string",
-                                        "minLength": 8
+                                        "minLength": 8,
+                                        "description": "User old password"
                                     },
                                     "new_password": {
                                         "type": "string",
-                                        "minLength": 8
+                                        "minLength": 8,
+                                        "description": "User new password"
                                     }
                                 }
                             },
@@ -402,23 +429,27 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User register successfully",
+                        "description": "Password changed successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
                                         },
                                         "code": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "response code"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "response message"
                                         },
                                         "data": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "Password changed successfully"
                                         }
                                     }
                                 },
@@ -504,7 +535,7 @@
                         "$ref": "#/components/responses/UnprocessableEntitiy"
                     },
                     "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                        "$ref": "#/components/responses/InternalServer"
                     }
                 }
             },
@@ -519,16 +550,19 @@
                                 "required": ["email", "otp", "new_password"],
                                 "properties": {
                                     "email": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "User email to register"
                                     },
                                     "otp": {
                                         "type": "integer",
                                         "minLength": 6,
-                                        "maxLength": 6
+                                        "maxLength": 6,
+                                        "description": "otp code"
                                     },
                                     "new_password": {
                                         "type": "string",
-                                        "minLength": 8
+                                        "minLength": 8,
+                                        "description": "User new password"
                                     }
                                 }
                             },
@@ -543,20 +577,23 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User register successfully",
+                        "description": "OTP Send successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
                                         "success": {
-                                            "type": "boolean"
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
                                         },
                                         "code": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "response code"
                                         },
                                         "message": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "response message"
                                         }
                                     }
                                 },
@@ -621,7 +658,1035 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": "Category list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Category ID"
+                                                    },
+                                                    "name": {
+                                                        " type": "string",
+                                                        " description": "Category name"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "description": "Category Slug"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "description": "url to category image"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Category list",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "123123123",
+                                            "slug": "123123123",
+                                            "image": null
+                                        }
+                                    ],
+                                    "pagination": {
+                                        "current_page": 1,
+                                        "last_page": 1,
+                                        "per_page": 10,
+                                        "total": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Create New Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Category Name"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Fruit"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    " type": "string",
+                                                    " description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Category created successfully",
+                                    "data": {
+                                        "name": "fruit",
+                                        "slug": "fruit",
+                                        "id": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/category/{categoryID}": {
+            "get": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Get Category Detail",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "description": "url to category image"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Category details",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "fruita",
+                                        "slug": "fruita",
+                                        "image": null
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Update Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Category Name"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Fruit"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "description": "url to category image"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Category updated successfully",
+                                    "data": {
+                                        "name": "fruit",
+                                        "slug": "fruit",
+                                        "id": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Delete Category",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Category deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            }
+        },
+        "/admin/category/{categoryID}/image": {
+            "post": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Add image to category",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "description": "image to category (image file png,jpg,gif,svg|max:2048kb)"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Fruit"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    " type": "string",
+                                                    " description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Category image uploaded successfully",
+                                    "data": {
+                                        "id": 2,
+                                        "name": "fruit",
+                                        "slug": "fruit",
+                                        "image": "http://panensia.id/storage/images/categories/syHj47YBWKuftTMKSiTtV8IwGY9rnxXztCFamT6L.png"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/category/{categoryID}/image/edit": {
+            "post": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "edit category image",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "description": "image to category (image file png,jpg,gif,svg|max:2048kb)"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Fruit"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    " type": "string",
+                                                    " description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Category image uploaded successfully",
+                                    "data": {
+                                        "id": 2,
+                                        "name": "fruit",
+                                        "slug": "fruit",
+                                        "image": "http://panensia.id/storage/images/categories/syHj47YBWKuftTMKSiTtV8IwGY9rnxXztCFamT6L.png"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/product": {
+            "get": {
+                "description": "Get product data (Admin user)",
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "description": "total data in single page",
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true,
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "description": "Filter product by name",
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "required": false,
+                        "description": "Filter product by category_id",
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "description": "pagination page",
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true,
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Product ID"
+                                                    },
+                                                    "name": {
+                                                        " type": "string",
+                                                        " description": "Product name"
+                                                    },
+                                                    "price": {
+                                                        "type": "integer",
+                                                        "description": "Product price"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "description": "url to Product image"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "OK",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "banana",
+                                            "image": null,
+                                            "price": null
+                                        }
+                                    ],
+                                    "pagination": {
+                                        "current_page": 1,
+                                        "last_page": 1,
+                                        "per_page": 10,
+                                        "total": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Create New Product",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "product name"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "product description"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "description": "category id for product"
+                                    }
+                                },
+                                "example": {
+                                    "name": "banana",
+                                    "description": "Fresh banana",
+                                    "category_id": 2
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Product ID"
+                                                },
+                                                "name": {
+                                                    " type": "string",
+                                                    " description": "Product name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Product Slug"
+                                                },
+                                                "category_id": {
+                                                    "type": "string",
+                                                    "description": "Product categiory id"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "description": "Product creating time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "description": "Product updating time"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Product created",
+                                    "data": {
+                                        "name": "banana",
+                                        "slug": "banana",
+                                        "description": "Fresh banana",
+                                        "category_id": 2,
+                                        "updated_at": "2023-08-15T03:59:54.000000Z",
+                                        "created_at": "2023-08-15T03:59:54.000000Z",
+                                        "id": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/product/{productID}": {
+            "get": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Get Product Detail",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "description": "url to category image"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Category details",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "fruita",
+                                        "slug": "fruita",
+                                        "image": null
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Update Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "product name"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "product description"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "description": "category id for product"
+                                    }
+                                },
+                                "example": {
+                                    "name": "banana",
+                                    "description": "Fresh banana",
+                                    "category_id": 2
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Category ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Category name"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "description": "Category Slug"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "description": "url to category image"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Category updated successfully",
+                                    "data": {
+                                        "name": "fruit",
+                                        "slug": "fruit",
+                                        "id": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["admin"],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Delete Product",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Category deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
                 }
             }
         }
@@ -629,26 +1694,31 @@
     "components": {
         "responses": {
             "BadRequest": {
-                "description": "Unmatch credential",
+                "description": "Bad Request Erorr",
                 "content": {
                     "application/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "return true if success and return false if error"
                                 },
                                 "code": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "response code"
                                 },
                                 "message": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "error message"
                                 },
                                 "errors": {
                                     "type": "array",
+                                    "description": "list of errors",
                                     "minItems": 1,
                                     "items": {
                                         "type": "string",
+                                        "description": "error message",
                                         "minLength": 1
                                     }
                                 }
@@ -658,26 +1728,31 @@
                 }
             },
             "Unauthorized": {
-                "description": "Unautorize",
+                "description": "Unautorize Error",
                 "content": {
                     "application/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "return true if success and return false if error"
                                 },
                                 "code": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "response code"
                                 },
                                 "message": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "error message"
                                 },
                                 "errors": {
                                     "type": "array",
+                                    "description": "list of errors",
                                     "minItems": 1,
                                     "items": {
                                         "type": "string",
+                                        "description": "error message",
                                         "minLength": 1
                                     }
                                 }
@@ -695,26 +1770,31 @@
                 }
             },
             "UnprocessableEntitiy": {
-                "description": "User register successfully",
+                "description": "Unprocessable Entity Error",
                 "content": {
                     "application/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "return true if success and return false if error"
                                 },
                                 "code": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "response code"
                                 },
                                 "message": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "error message"
                                 },
                                 "errors": {
                                     "type": "array",
+                                    "description": "list of errors",
                                     "minItems": 1,
                                     "items": {
                                         "type": "string",
+                                        "description": "error message",
                                         "minLength": 1
                                     }
                                 }
@@ -734,7 +1814,7 @@
                     }
                 }
             },
-            "InternalServerError": {
+            "InternalServer": {
                 "description": "Internal server error",
                 "content": {
                     "application/json": {
@@ -742,13 +1822,16 @@
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "return true if success and return false if error"
                                 },
                                 "code": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "response code"
                                 },
                                 "message": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "error message"
                                 }
                             }
                         },
@@ -756,6 +1839,46 @@
                             "success": false,
                             "code": 500,
                             "message": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "NotFound": {
+                "description": "Not Found Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "description": "return true if success and return false if error"
+                                },
+                                "code": {
+                                    "type": "integer",
+                                    "description": "response code"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "error message"
+                                },
+                                "errors": {
+                                    "type": "array",
+                                    "description": "list of errors",
+                                    "minItems": 1,
+                                    "items": {
+                                        "type": "string",
+                                        "description": "error message",
+                                        "minLength": 1
+                                    }
+                                }
+                            }
+                        },
+                        "example": {
+                            "success": false,
+                            "code": 404,
+                            "message": "Not Found",
+                            "errors": ["Model Not Found"]
                         }
                     }
                 }
