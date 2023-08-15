@@ -133,7 +133,7 @@ class ProductController extends Controller
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->where('products.id', $product->id)
         ->select('products.id', 'products.name','products.slug','products.description','categories.name as category_name')
-        ->get();
+        ->first();
 
         return response()->json([
             'success' => true,
