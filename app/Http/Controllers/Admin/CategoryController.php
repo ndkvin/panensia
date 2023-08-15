@@ -106,7 +106,6 @@ class CategoryController extends Controller
           'code' => 200,
           'message' => 'Category details',
           'data' => $category
-          
         ]);
     }
 
