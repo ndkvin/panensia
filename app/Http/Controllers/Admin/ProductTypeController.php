@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
@@ -118,6 +119,15 @@ class ProductTypeController extends Controller
               'Product type not found'
           ]
         ], 404);
+      }
+
+      if(OrderProduct::where('product_type_id', $type->id)->count() > 0 ) {
+        return response()->json([
+          'success' => false,
+          'code' => 400,
+          'message' => 'Bad Request',
+          'errors' => ['Product cannot be deleted because it is still in use']
+        ], 422);
       }
 
       $type->delete();

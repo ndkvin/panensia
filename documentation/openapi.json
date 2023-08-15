@@ -76,8 +76,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -159,8 +158,7 @@
                                 "password": "123123123"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "201": {
@@ -356,8 +354,7 @@
                                 "phone": "089767656112"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -444,8 +441,7 @@
                                 "new_password": "andikaandika"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -519,8 +515,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -602,8 +597,7 @@
                                 "new_password": "089767656112"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -788,8 +782,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "201": {
@@ -957,8 +950,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1096,25 +1088,21 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "name"
+                                    "image"
                                 ],
                                 "properties": {
                                     "image": {
                                         "type": "string",
                                         "description": "image to category (image file png,jpg,gif,svg|max:2048kb)"
                                     }
-                                },
-                                "example": {
-                                    "name": "Fruit"
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "201": {
-                        "description": "Category Created",
+                        "description": "Image success uploaded",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1194,25 +1182,21 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "name"
+                                    "image"
                                 ],
                                 "properties": {
                                     "image": {
                                         "type": "string",
                                         "description": "image to category (image file png,jpg,gif,svg|max:2048kb)"
                                     }
-                                },
-                                "example": {
-                                    "name": "Fruit"
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "201": {
-                        "description": "Category Created",
+                        "description": "Category image edited successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1238,8 +1222,8 @@
                                                     "description": "Category ID"
                                                 },
                                                 "name": {
-                                                    " type": "string",
-                                                    " description": "Category name"
+                                                    "type": "string",
+                                                    "description": "Category name"
                                                 },
                                                 "slug": {
                                                     "type": "string",
@@ -1416,7 +1400,9 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "name"
+                                    "name",
+                                    "description",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1439,8 +1425,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "201": {
@@ -1685,7 +1670,9 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "name"
+                                    "name",
+                                    "description",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1708,8 +1695,7 @@
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1838,6 +1824,439 @@
                     },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            }
+        },
+        "/admin/product/{productID}/image": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Add product image",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "type": "array",
+                                        "description": "list of product image",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "product image (image file png,jpg,gif,svg|max:2048kb)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product image uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "description": "list of product image",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Image ID"
+                                                    },
+                                                    "product_id": {
+                                                        "type": "integer",
+                                                        "description": "Product ID"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "description": "url to image"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Product image uploaded successfully",
+                                    "data": [
+                                        {
+                                            "product_id": "1",
+                                            "image": "http://panensia.id/storage/images/product/czhzjtwqD1cKCUBYwefT2xnNhdpkwbKih9xMHP7N.png",
+                                            "id": 2
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/product/{productID}/image/{productImageID}": {
+            "delete": {
+                "tags": [
+                    "admin"
+                ],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Add product image",
+                "responses": {
+                    "200": {
+                        "description": "Image deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Product image deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/admin/product/{productID}/type": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Add product image",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "types"
+                                ],
+                                "properties": {
+                                    "types": {
+                                        "type": "array",
+                                        "description": "list of product type",
+                                        "items": {
+                                            "type": "object",
+                                            "description": "product type",
+                                            "required": [
+                                                "name",
+                                                "price",
+                                                "stock",
+                                                "weight"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "type name"
+                                                },
+                                                "price": {
+                                                    "type": "integer",
+                                                    "description": "type price"
+                                                },
+                                                "stock": {
+                                                    "type": "integer",
+                                                    "description": "type stock"
+                                                },
+                                                "weight": {
+                                                    "type": "integer",
+                                                    "description": "type weight"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "types": [
+                                        {
+                                            "name": "banana",
+                                            "price": 10000,
+                                            "stock": 20,
+                                            "weight": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product type created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "description": "list of product type",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Type ID"
+                                                    },
+                                                    "product_id": {
+                                                        "type": "integer",
+                                                        "description": "Product ID"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "Type name"
+                                                    },
+                                                    "price": {
+                                                        "type": "integer",
+                                                        "description": "Type price"
+                                                    },
+                                                    "stock": {
+                                                        "type": "integer",
+                                                        "description": "Type stock"
+                                                    },
+                                                    "weight": {
+                                                        "type": "integer",
+                                                        "description": "Type weight"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Created",
+                                    "data": [
+                                        {
+                                            "name": "banana",
+                                            "price": 10000,
+                                            "weight": 2,
+                                            "stock": 10,
+                                            "product_id": 1,
+                                            "id": 2
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "admin"
+                ],
+                "security": [
+                    {
+                        "auth_admin": []
+                    }
+                ],
+                "description": "Add product image",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "types"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "type name"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "description": "type price"
+                                    },
+                                    "stock": {
+                                        "type": "integer",
+                                        "description": "type stock"
+                                    },
+                                    "weight": {
+                                        "type": "integer",
+                                        "description": "type weight"
+                                    }
+                                },
+                                "example": {
+                                    "name": "banana",
+                                    "price": 10000,
+                                    "stock": 20,
+                                    "weight": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product type edited successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "description": "list of product type",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Type ID"
+                                                },
+                                                "product_id": {
+                                                    "type": "integer",
+                                                    "description": "Product ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "Type name"
+                                                },
+                                                "price": {
+                                                    "type": "integer",
+                                                    "description": "Type price"
+                                                },
+                                                "stock": {
+                                                    "type": "integer",
+                                                    "description": "Type stock"
+                                                },
+                                                "weight": {
+                                                    "type": "integer",
+                                                    "description": "Type weight"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "code": 200,
+                                        "message": "Product type updated successfully",
+                                        "data": {
+                                            "id": 2,
+                                            "product_id": 1,
+                                            "name": "banana",
+                                            "price": 10000,
+                                            "stock": 10,
+                                            "weight": 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
                     }
                 }
             }
