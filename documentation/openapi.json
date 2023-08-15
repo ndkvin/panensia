@@ -1678,7 +1678,7 @@
                         "auth_admin": []
                     }
                 ],
-                "description": "Update Category",
+                "description": "Update Product",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1825,7 +1825,7 @@
                                 "example": {
                                     "success": true,
                                     "code": 200,
-                                    "message": "Category deleted successfully"
+                                    "message": "Product deleted"
                                 }
                             }
                         }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductType;
@@ -199,22 +201,23 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if($product->orders()->count() > 0) {
+        $productType = ProductType::where('product_id', $product->id)->select('id')->get();
+
+        if(OrderProduct::whereIn('product_type_id', $productType)->count() > 0 ) {
           return response()->json([
             'success' => false,
             'code' => 400,
             'message' => 'Bad Request',
-            'errors' => ['Product cannot be deleted because it has been ordered']
-          ], 400);
+            'errors' => ['Product cannot be deleted because it is still in use']
+          ], 422);
         }
-        
+
         $product->delete();
 
         return response()->json([
           'success' => true,
           'code' => 200,
           'message' => 'Product deleted',
-          'data' => $product
         ]);
     }
 }
