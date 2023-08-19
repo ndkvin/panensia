@@ -51,6 +51,7 @@ class AddressController extends Controller
             'province' => 'required|string',
             'postal_code' => 'required|numeric',
             'phone' => 'required|string|min:10|max:13',
+            'name' => 'required|string'
         ]);
 
         if ($validate->fails()) {
@@ -77,6 +78,7 @@ class AddressController extends Controller
             'province' => $request->province,
             'postal_code' => $request->postal_code,
             'phone' => $request->phone,
+            'name' => $request->name
         ]);
 
         return response()->json([
@@ -136,6 +138,7 @@ class AddressController extends Controller
             'province' => 'required|string',
             'postal_code' => 'required|numeric',
             'phone' => 'required|string|min:10|max:13',
+            'name' => 'required|string'
         ]);
       
         if ($validate->fails()) {
@@ -161,6 +164,7 @@ class AddressController extends Controller
             'province' => $request->province,
             'postal_code' => $request->postal_code,
             'phone' => $request->phone,
+            'name' => $request->name
         ]);
 
         return response()->json([
