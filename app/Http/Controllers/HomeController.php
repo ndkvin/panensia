@@ -21,7 +21,7 @@ class HomeController extends Controller
               },
             ]
           )
-          ->select('id', 'name')
+          ->select('id', 'name', 'description')
           ->paginate($request->input('per_page', 8));
 
         foreach ($products as $product) {

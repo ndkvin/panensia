@@ -209,7 +209,7 @@ class ProductController extends Controller
             'code' => 400,
             'message' => 'Bad Request',
             'errors' => ['Product cannot be deleted because it is still in use']
-          ], 422);
+          ], 400);
         }
 
         $product->delete();

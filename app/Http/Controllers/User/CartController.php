@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -15,11 +16,30 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->select('id', 'product_type_id', 'quantity')->get();
+        $baseUrl = url('/');
+
+        $carts = Cart::where('user_id', auth()->user()->id)
+          ->join('product_types', 'product_types.id', '=', 'carts.product_type_id')
+          ->join('products', 'products.id', '=', 'product_types.product_id')
+          ->leftJoin('product_images', function ($join) {
+            $join->on('product_images.product_id', '=', 'products.id')
+              ->whereRaw('product_images.id = (SELECT id FROM product_images WHERE product_id = products.id ORDER BY created_at ASC LIMIT 1)');
+          })
+          ->select('carts.id', 'carts.product_type_id', 'carts.quantity', 'products.name as product_name', 'product_types.name as product_type_name', 'product_types.price', DB::raw("CONCAT('$baseUrl/storage/', product_images.image) as image"), DB::raw('(CASE WHEN carts.quantity <= product_types.stock THEN true ELSE false END) as is_available'))
+          ->get();
+        
+          return response()->json([
+            'success' => true,
+            'code' => 200,
+            'message' => 'Cart list',
+            'data' => $carts,
+        ]);
 
         foreach($carts as $cart) {
             $productType = ProductType::find($cart->product_type_id);
             $cart->stock_available = $productType->stock;
+            
+            unset($cart->user_id);
             $cart->is_available = $productType->stock >= $cart->quantity ? true : false;
         }
 
