@@ -84,9 +84,9 @@ class CartController extends Controller
           ], 422);
         }
 
-        $productType = ProductType::find($request->product_type_id);
+        $productType = ProductType::find($request->json('product_type_id'));
 
-        $cart = Cart::where('user_id', auth()->user()->id)->where('product_type_id', $request->product_type_id)->first();
+        $cart = Cart::where('user_id', auth()->user()->id)->where('product_type_id', $request->json('product_type_id'))->first();
 
         // if stock is 0
         if($productType->stock == 0) {
@@ -102,7 +102,7 @@ class CartController extends Controller
         if(!$cart) {
           $cart = Cart::create([
             'user_id' => auth()->user()->id,
-            'product_type_id' => $request->product_type_id,
+            'product_type_id' => $request->json('product_type_id'),
             'quantity' => 1,
           ]);
   
@@ -183,7 +183,7 @@ class CartController extends Controller
           ], 422);
         }
 
-        if(!$request->increment) {
+        if(!$request->json('increment')) {
           $cart->quantity = $cart->quantity - 1;
 
           if($cart->quantity == 0) {

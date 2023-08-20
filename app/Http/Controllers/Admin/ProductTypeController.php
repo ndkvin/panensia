@@ -14,7 +14,6 @@ class ProductTypeController extends Controller
     public function store(Request $request, Product $product)
     {
       $validate = Validator::make($request->json()->all(), [
-
         "types" => "required|array",
         'types.*.name' => 'required|string|max:255',
         'types.*.price' => 'required|numeric',
@@ -39,7 +38,8 @@ class ProductTypeController extends Controller
       }
       
       $data = [];
-      foreach($request->types as $request) {
+      
+      foreach($request->json('types') as $request) {
         $data[] = ProductType::create([
           'name' => $request['name'],
           'price' => $request['price'],
@@ -94,10 +94,10 @@ class ProductTypeController extends Controller
       }
 
       $type->update([
-        'name' => $request->name,
-        'price' => $request->price,
-        'weight' => $request->weight,
-        'stock' => $request->stock
+        'name' => $request->json('name'),
+        'price' => $request->json('price'),
+        'weight' => $request->json('weight'),
+        'stock' => $request->json('stock')
       ]);
 
       return response()->json([

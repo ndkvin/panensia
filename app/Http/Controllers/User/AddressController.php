@@ -72,13 +72,13 @@ class AddressController extends Controller
 
         $address = UserAddress::create([
             'user_id' => auth()->user()->id,
-            'address' => $request->address,
-            'street' => $request->street,
-            'city' => $request->city,
-            'province' => $request->province,
-            'postal_code' => $request->postal_code,
-            'phone' => $request->phone,
-            'name' => $request->name
+            'address' => $request->json('address'),
+            'street' => $request->json('street'),
+            'city' => $request->json('city'),
+            'province' => $request->json('province'),
+            'postal_code' => $request->json('postal_code'),
+            'phone' => $request->json('phone'),
+            'name' => $request->json('name')
         ]);
 
         return response()->json([
@@ -158,13 +158,13 @@ class AddressController extends Controller
         }
 
         $address->update([
-            'address' => $request->address,
-            'street' => $request->street,
-            'city' => $request->city,
-            'province' => $request->province,
-            'postal_code' => $request->postal_code,
-            'phone' => $request->phone,
-            'name' => $request->name
+            'address' => $request->json('address'),
+            'street' => $request->json('street'),
+            'city' => $request->json('city'),
+            'province' => $request->json('province'),
+            'postal_code' => $request->json('postal_code'),
+            'phone' => $request->json('phone'),
+            'name' => $request->json('name')
         ]);
 
         return response()->json([

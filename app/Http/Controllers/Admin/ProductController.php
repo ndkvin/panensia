@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -108,11 +106,11 @@ class ProductController extends Controller
         
         // create the product
         $product = Product::create([
-          'name' => $request->name,
-          'slug' => $this->createUniqueSlug($request->name),
-          'description' => $request->description,
-          'price' => $request->price,
-          'category_id' => $request->category_id
+          'name' => $request->json('name'),
+          'slug' => $this->createUniqueSlug($request->json('name')),
+          'description' => $request->json('description'),
+          'price' => $request->json('price'),
+          'category_id' => $request->json('category_id')
         ]);
 
         return response()->json([
@@ -181,9 +179,9 @@ class ProductController extends Controller
           ], 422);
         }
         
-        $data = $request->all();
-        if ($request->name != $product->name) {
-          $data['slug'] = $this->createUniqueSlug($request->name);
+        $data = $request->json()->all();
+        if ($request->json('name') != $product->name) {
+          $data['slug'] = $this->createUniqueSlug($request->json('name'));
         }
         // update the product
         $product->update($data);

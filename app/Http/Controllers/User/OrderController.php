@@ -81,7 +81,7 @@ class OrderController extends Controller
 
         DB::beginTransaction();
 
-        $payment_method = $request->payment == 1 ? "MANUAL" : "MIDTRANS";
+        $payment_method = $request->json('payment') == 1 ? "MANUAL" : "MIDTRANS";
         try {
             $order = Order::create([
                 'user_id' => auth()->user()->id,
@@ -92,20 +92,22 @@ class OrderController extends Controller
                 'status' => 'UNPAID',
             ]);
 
+            $address = $request->json('address');
+
             $order->address()->create([
-                'name' => $request->address['name'],
-                'address' => $request->address['address'],
-                'street' => $request->address['street'],
-                'city' => $request->address['city'],
-                'province' => $request->address['province'],
-                'postal_code' => $request->address['postal_code'],
-                'phone' => $request->address['phone'],
+                'name' => $address['name'],
+                'address' => $address['address'],
+                'street' => $address['street'],
+                'city' => $address['city'],
+                'province' => $address['province'],
+                'postal_code' => $address['postal_code'],
+                'phone' => $address['phone'],
             ]);
 
             $weight = 0;
             $total = 0;
 
-            foreach($request->items as $item) {
+            foreach($request->json('items') as $item) {
                 $productType = ProductType::find($item['product_type_id']);
 
                 if ($productType->stock < $item['quantity']) {
@@ -139,7 +141,7 @@ class OrderController extends Controller
                 $productType->save();
             }
 
-            if($request->payment == 2) {
+            if($request->json('payment') == 2) {
                 $response = Midtrans::createPayment($order->invoice, $total);
 
                 $order->payment_ref = $response->token;

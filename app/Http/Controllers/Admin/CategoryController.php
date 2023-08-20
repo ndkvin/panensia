@@ -84,8 +84,8 @@ class CategoryController extends Controller
         
         // create the category
         $category = Category::create([
-          'name' => $request->name,
-          'slug' => $this->createUniqueSlug($request->name)
+          'name' => $request->json('name'),
+          'slug' => $this->createUniqueSlug($request->json('name'))
         ]);
 
         return response()->json([
@@ -142,11 +142,11 @@ class CategoryController extends Controller
         ], 422);
       }
 
-      $data = $request->all();
+      $data = $request->json()->all();
 
       // jika nama berbeda
-      if ($request->name != $category->name) {
-        $data['slug'] = $this->createUniqueSlug($request->name);
+      if ($request->json('name') != $category->name) {
+        $data['slug'] = $this->createUniqueSlug($request->json('name'));
       }
   
       // update category
