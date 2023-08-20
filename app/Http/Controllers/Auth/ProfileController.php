@@ -50,7 +50,7 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
-        if (!Hash::check($request->old_password, $user->password)) {
+        if (!Hash::check($request->json('old_password'), $user->password)) {
             return response()->json([
                 'success' => false,
                 'code' => 400,
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         $user = User::find($user->id);
 
         $user = $user->update([
-            'password' => bcrypt($request->new_password)
+            'password' => bcrypt($request->json('new_password'))
         ]);
 
         return response()->json([
@@ -102,9 +102,9 @@ class ProfileController extends Controller
         $user = User::find($user->id);
 
         $user = $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone
+            'name' => $request->json('name'),
+            'email' => $request->json('email'),
+            'phone' => $request->json('phone')
         ]);
 
         return response()->json([

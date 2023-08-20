@@ -34,7 +34,7 @@ class AuthController extends Controller
       ], 422);
     }
 
-    $data = $request->all();
+    $data = $request->json()->all();
     $data['password'] = bcrypt($data['password']);
 
     $user = User::create($data);
@@ -74,7 +74,7 @@ class AuthController extends Controller
       ], 422);
     }
 
-    if (!auth()->attempt($request->all())) {
+    if (!auth()->attempt($request->json()->all())) {
       return response()->json([
         'success' => false,
         'code' => 400,

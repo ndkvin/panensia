@@ -38,7 +38,7 @@ class ResetPasswordController extends Controller
             ], 422);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->json('email'))->first();
 
         $otpDb = ResetPasswordOtp::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
         if($otpDb) {
@@ -109,7 +109,7 @@ class ResetPasswordController extends Controller
             ], 422);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->json('email'))->first();
 
         $otpDb = ResetPasswordOtp::where([
                 ['user_id', $user->id],
@@ -127,7 +127,7 @@ class ResetPasswordController extends Controller
             ], 400);
         }
 
-        if(!Hash::check($request->otp, $otpDb->token)) {
+        if(!Hash::check($request->json('otp'), $otpDb->token)) {
             $otpDb->failed_attempt += 1;
             $otpDb->save();
 
@@ -145,7 +145,7 @@ class ResetPasswordController extends Controller
             ], 400);
         }
 
-        $user->password = Hash::make($request->new_password);
+        $user->password = Hash::make($request->json('new_password'));
         $user->save();
 
         $otpDb->is_valid = false;
