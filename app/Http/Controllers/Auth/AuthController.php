@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
   public function register(Request $request)
   {
-    $validate = Validator::make($request->all(), [
+    $validate = Validator::make($request->json()->all(), [
       'name' => 'required|min:3|max:55',
       'email' => 'email|required|unique:users',
       'password' => 'required|min:8',
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
   public function login(Request $request)
   {
-    $validate = Validator::make($request->all(), [
+    $validate = Validator::make($request->json()->all(), [
       'email' => 'email|required',
       'password' => 'required|min:8'
     ]);

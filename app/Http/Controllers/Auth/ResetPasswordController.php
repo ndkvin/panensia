@@ -18,7 +18,7 @@ class ResetPasswordController extends Controller
 {
     public function sendOtp(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'email' => 'email|required|exists:users,email',
         ]);
 
@@ -87,7 +87,7 @@ class ResetPasswordController extends Controller
     }
 
     public function changePassword(Request $request) {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'email' => 'email|required|exists:users,email',
             'otp' => 'integer|required|min:6,max:8',
             'new_password' => 'required|min:8|string',

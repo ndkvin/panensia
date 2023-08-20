@@ -84,7 +84,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // validate the request
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
           'name' => 'required|string|min:3|max:55|unique:products,name',
           'description' => 'required|string',
           'category_id' => 'required|numeric|exists:categories,id'
@@ -159,7 +159,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         // validate the request
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
           'name' => 'required|string|min:3|max:55|unique:products,name,'. $product->id,
           'description' => 'required|string',
           'category_id' => 'required|numeric|exists:categories,id'

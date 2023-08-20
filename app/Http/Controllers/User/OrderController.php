@@ -49,7 +49,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'items' => 'required|array',
             'items.*.product_type_id' => 'required|numeric|exists:product_types,id',
             'items.*.quantity' => 'required|numeric',

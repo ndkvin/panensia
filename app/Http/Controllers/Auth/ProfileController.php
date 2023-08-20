@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
     public function changePassword(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'old_password' => 'required|min:8|string',
             'new_password' => 'required|min:8|string'
         ]);
@@ -77,7 +77,7 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'name' => 'required|min:3|max:55',
             'email' => 'email|required|unique:users,email,'.$user->id,
             'phone' => 'required|min:10|max:12'

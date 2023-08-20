@@ -64,7 +64,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
           'product_type_id' => 'required|exists:product_types,id',
         ]);
 
@@ -163,7 +163,7 @@ class CartController extends Controller
           ], 403);
         }
 
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
           'increment' => 'required|boolean',
         ]);
         

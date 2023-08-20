@@ -13,7 +13,7 @@ class ProductTypeController extends Controller
 {
     public function store(Request $request, Product $product)
     {
-      $validate = Validator::make($request->all(), [
+      $validate = Validator::make($request->json()->all(), [
 
         "types" => "required|array",
         'types.*.name' => 'required|string|max:255',
@@ -70,7 +70,7 @@ class ProductTypeController extends Controller
         ], 404);
       }
 
-      $validate = Validator::make($request->all(), [
+      $validate = Validator::make($request->json()->all(), [
         'name' => 'required|string|max:255',
         'price' => 'required|numeric',
         'weight' => 'required|numeric',

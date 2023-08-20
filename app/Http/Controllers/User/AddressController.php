@@ -44,7 +44,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'address' => 'required|string',
             'street' => 'required|string',
             'city' => 'required|string',
@@ -131,7 +131,7 @@ class AddressController extends Controller
             ], 403);
         }
 
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'address' => 'required|string',
             'street' => 'required|string',
             'city' => 'required|string',
