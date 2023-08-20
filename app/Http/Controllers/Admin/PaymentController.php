@@ -25,7 +25,7 @@ class PaymentController extends Controller
         ->select('orders.id', 'orders.invoice', 'orders.status', 'orders.total', 'orders.created_at', 'users.name as user_name')
         ->where([
           ['orders.payment_method', '=', "MANUAL"],
-          ['orders.status', '=', 'pending'],
+          ['orders.status', '=', 'PENDING'],
         ])
         ->paginate($request->input('per_page', 10));
 
@@ -91,7 +91,7 @@ class PaymentController extends Controller
           ->where([
               ['orders.id', $payment->id]
             ])
-          ->get();
+          ->first();
         return response()->json([
             'success' => true,
             'code' => 200,
@@ -114,7 +114,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Order $payment)
     {
-        if($payment->payment_method_id != 1) {
+        if($payment->payment_method != "MANUAL") {
             return response()->json([
                 'success' => false,
                 'code' => 400,

@@ -55,7 +55,7 @@ Route::group([
   Route::resource('product', App\Http\Controllers\Admin\ProductController::class)->except(['edit', 'create']);
   Route::resource('/product/{product}/image', App\Http\Controllers\Admin\ProductImageController::class)->only(['store', 'destroy']);
   Route::resource('/product/{product}/type', App\Http\Controllers\Admin\ProductTypeController::class)->only(['store', 'destroy', 'update']);
-  Route::resource('order', App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show']);
+  Route::resource('order', App\Http\Controllers\Admin\OrderController::class)->only(['index', 'show', 'update']);
   Route::resource('payment', App\Http\Controllers\Admin\PaymentController::class)->only(['index', 'show', 'update']);
 });
 
