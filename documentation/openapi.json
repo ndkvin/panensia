@@ -1678,7 +1678,7 @@
                                                     "description": "total data"
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 },
                                 "example": {
@@ -3114,7 +3114,7 @@
                                                     "description": "total data"
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 },
                                 "example": {
@@ -3695,6 +3695,934 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
+        },
+        "/user/order": {
+            "get": {
+                "description": "User product list",
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "description": "total data in single page",
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true,
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "description": "pagination page",
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true,
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User order list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Order ID"
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "description": "User ID"
+                                                    },
+                                                    "payment_method": {
+                                                        "type": "string",
+                                                        "description": "Payment method"
+                                                    },
+                                                    "invoice": {
+                                                        "type": "string",
+                                                        "description": "Invoice number"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "description": "Order status"
+                                                    },
+                                                    "total": {
+                                                        "type": "integer",
+                                                        "description": "Order total price"
+                                                    },
+                                                    "payment_ref": {
+                                                        "type": "string",
+                                                        "description": "Payment reference"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "description": "Order created at"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "description": "Order updated at"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "description": "current page"
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "description": "last page"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "description": "total data in single page"
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "description": "total data"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Order list",
+                                    "data": [
+                                        {
+                                            "id": 2,
+                                            "user_id": 3,
+                                            "payment_method": "MANUAL",
+                                            "invoice": "INV-6IVO1V",
+                                            "status": "UNPAID",
+                                            "total": 123123,
+                                            "payment_ref": "0",
+                                            "created_at": "2023-08-20T05:59:03.000000Z",
+                                            "updated_at": "2023-08-20T05:59:03.000000Z"
+                                        }
+                                    ],
+                                    "pagination": {
+                                        "current_page": 1,
+                                        "last_page": 1,
+                                        "per_page": 10,
+                                        "total": 6
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "description": "Create New order",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "items",
+                                    "address",
+                                    "payment"
+                                ],
+                                "properties": {
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "product_type_id",
+                                                "quantity"
+                                            ],
+                                            "properties": {
+                                                "product_type_id": {
+                                                    "type": "integer",
+                                                    "description": "Product type ID"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "description": "Product quantity"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "address": {
+                                        "type": "object",
+                                        "required": [
+                                            "address",
+                                            "street",
+                                            "city",
+                                            "province",
+                                            "postal_code",
+                                            "phone",
+                                            "name"
+                                        ],
+                                        "properties": {
+                                            "address": {
+                                                "type": "string",
+                                                "description": "address detail"
+                                            },
+                                            "street": {
+                                                "type": "string",
+                                                "description": "street address"
+                                            },
+                                            "city": {
+                                                "type": "string",
+                                                "description": "city address"
+                                            },
+                                            "province": {
+                                                "type": "string",
+                                                "description": "province address"
+                                            },
+                                            "postal_code": {
+                                                "type": "integer",
+                                                "description": "postal code address"
+                                            },
+                                            "phone": {
+                                                "type": "string",
+                                                "description": "phone number address"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "User name in that address"
+                                            }
+                                        }
+                                    },
+                                    "payment": {
+                                        "type": "integer",
+                                        "description": "Payment method ID"
+                                    }
+                                },
+                                "example": {
+                                    "items": [
+                                        {
+                                            "product_type_id": 1,
+                                            "quantity": 1
+                                        }
+                                    ],
+                                    "address": {
+                                        "address": "solo",
+                                        "street": "jalan solo",
+                                        "city": "kota solo",
+                                        "province": "central java",
+                                        "postal_code": "578123",
+                                        "name": "joko",
+                                        "phone": "123123123123"
+                                    },
+                                    "payment": 2
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Order Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "description": "Order data",
+                                            "properties": {
+                                                "order": {
+                                                    "type": "object",
+                                                    "description": "order detail",
+                                                    "properties": {
+                                                        "user_id": {
+                                                            "type": "integer",
+                                                            "description": "User ID"
+                                                        },
+                                                        "invoice": {
+                                                            "type": "string",
+                                                            "description": "Invoice number"
+                                                        },
+                                                        "payment_ref": {
+                                                            "type": "string",
+                                                            "description": "Payment reference"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer",
+                                                            "description": "Total order"
+                                                        },
+                                                        "payment_method": {
+                                                            "type": "string",
+                                                            "description": "Payment method"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "description": "Order status"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "description": "Order updated at"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "description": "Order created at"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "description": "Order ID"
+                                                        },
+                                                        "weight": {
+                                                            "type": "integer",
+                                                            "description": "Order weight"
+                                                        }
+                                                    }
+                                                },
+                                                "payment": {
+                                                    "type": "object",
+                                                    "description": "Payment data",
+                                                    "properties": {
+                                                        "token": {
+                                                            "type": "string",
+                                                            "description": "Payment token"
+                                                        },
+                                                        "redirect_url": {
+                                                            "type": "string",
+                                                            "description": "Payment redirect url"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Created",
+                                    "data": {
+                                        "order": {
+                                            "user_id": 3,
+                                            "invoice": "INV-UO9X1G",
+                                            "payment_ref": "9f1e4dba-9252-4426-8373-ea34dfdb6a9e",
+                                            "total": 123123,
+                                            "payment_method": "MIDTRANS",
+                                            "status": "UNPAID",
+                                            "updated_at": "2023-08-20T06:03:54.000000Z",
+                                            "created_at": "2023-08-20T06:03:53.000000Z",
+                                            "id": 7,
+                                            "weight": 1
+                                        },
+                                        "payment": {
+                                            "token": "9f1e4dba-9252-4426-8373-ea34dfdb6a9e",
+                                            "redirect_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/9f1e4dba-9252-4426-8373-ea34dfdb6a9e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServer"
+                    }
+                }
+            }
+        },
+        "/user/order/{orderID}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "description": "Get order Detail",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Order ID"
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "description": "User ID"
+                                                },
+                                                "payment_method": {
+                                                    "type": "string",
+                                                    "description": "Payment method"
+                                                },
+                                                "invoice": {
+                                                    "type": "string",
+                                                    "description": "Invoice number"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "description": "Order status"
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "description": "Total order"
+                                                },
+                                                "payment_ref": {
+                                                    "type": "string",
+                                                    "description": "Payment reference"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "description": "Order created at"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "description": "Order updated at"
+                                                },
+                                                "address": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "description": "Address ID"
+                                                        },
+                                                        "order_id": {
+                                                            "type": "integer",
+                                                            "description": "Order ID"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "description": "User name in that address"
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "description": "address detail"
+                                                        },
+                                                        "street": {
+                                                            "type": "string",
+                                                            "description": "street address"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "description": "city address"
+                                                        },
+                                                        "province": {
+                                                            "type": "string",
+                                                            "description": "province address"
+                                                        },
+                                                        "postal_code": {
+                                                            "type": "string",
+                                                            "description": "postal code address"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "description": "phone number address"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "description": "Address created at"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "description": "Address updated at"
+                                                        }
+                                                    }
+                                                },
+                                                "shipment": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "description": "Shipment ID"
+                                                        },
+                                                        "order_id": {
+                                                            "type": "integer",
+                                                            "description": "Order ID"
+                                                        },
+                                                        "courier": {
+                                                            "type": "string",
+                                                            "description": "Courier name"
+                                                        },
+                                                        "service": {
+                                                            "type": "string",
+                                                            "description": "Courier service"
+                                                        },
+                                                        "shipping_cost": {
+                                                            "type": "integer",
+                                                            "description": "Shipping cost"
+                                                        },
+                                                        "resi": {
+                                                            "type": "string",
+                                                            "description": "Courier resi"
+                                                        },
+                                                        "weight": {
+                                                            "type": "integer",
+                                                            "description": "Order weight"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Order detail",
+                                    "data": {
+                                        "id": 7,
+                                        "user_id": 3,
+                                        "payment_method": "MIDTRANS",
+                                        "invoice": "INV-UO9X1G",
+                                        "status": "UNPAID",
+                                        "total": 123123,
+                                        "payment_ref": "9f1e4dba-9252-4426-8373-ea34dfdb6a9e",
+                                        "created_at": "2023-08-20T06:03:53.000000Z",
+                                        "updated_at": "2023-08-20T06:03:54.000000Z",
+                                        "address": {
+                                            "id": 6,
+                                            "order_id": 7,
+                                            "name": "joko",
+                                            "address": "solo",
+                                            "street": "jalan solo",
+                                            "city": "kota solo",
+                                            "province": "central java",
+                                            "postal_code": 578123,
+                                            "phone": "123123123123",
+                                            "created_at": "2023-08-20T06:03:53.000000Z",
+                                            "updated_at": "2023-08-20T06:03:53.000000Z"
+                                        },
+                                        "shipment": {
+                                            "id": 6,
+                                            "order_id": 7,
+                                            "courier": null,
+                                            "service": null,
+                                            "shipping_cost": null,
+                                            "resi": null,
+                                            "weight": 1
+                                        },
+                                        "order_products": [
+                                            {
+                                                "quantity": 1,
+                                                "item_price": 123123,
+                                                "name": "banana",
+                                                "image": "images/product/DCAZJ4VVLujcCgvEvkGBI7RnJZvGLoTw9vaZ7wGb.png"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            }
+        },
+        "/user/order/{orderID}/payment": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "description": "Get order payment status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "payment_status": {
+                                                    "type": "string",
+                                                    "description": "Payment status"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "OK",
+                                    "data": {
+                                        "payment_status": "UNPAID"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "description": "Add payment proof",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "bank",
+                                    "rekening"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "rekening owner"
+                                    },
+                                    "bank": {
+                                        "type": "string",
+                                        "description": "bank name"
+                                    },
+                                    "rekening": {
+                                        "type": "string",
+                                        "description": "rekening number"
+                                    }
+                                },
+                                "example": {
+                                    "name": "andika",
+                                    "bank": "bbb",
+                                    "rekening": "123123123"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Address Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "order_id": {
+                                                    "type": "integer",
+                                                    "description": "Order ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "rekening owner"
+                                                },
+                                                "bank": {
+                                                    "type": "string",
+                                                    "description": "bank name"
+                                                },
+                                                "rekening": {
+                                                    "type": "string",
+                                                    "description": "rekening number"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "description": "Payment proof updated at"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "description": "Payment proof created at"
+                                                },
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Payment proof ID"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 201,
+                                    "message": "Created, please send the payment proof",
+                                    "data": {
+                                        "order_id": 5,
+                                        "name": "andika",
+                                        "bank": "bbb",
+                                        "rekening": "123123123",
+                                        "updated_at": "2023-08-20T07:25:22.000000Z",
+                                        "created_at": "2023-08-20T07:25:22.000000Z",
+                                        "id": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
+                    }
+                }
+            }
+        },
+        "/user/order/{orderID}/payment/image": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "description": "Add payment proof image",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "description": "image file, (png, jpeg, jpg max 2 mb)"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "image posted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "Status request, return true if success and return false if error"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "description": "response code"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "response message"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "description": "Payment proof ID"
+                                                },
+                                                "order_id": {
+                                                    "type": "integer",
+                                                    "description": "Order ID"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "description": "rekening owner"
+                                                },
+                                                "bank": {
+                                                    "type": "string",
+                                                    "description": "bank name"
+                                                },
+                                                "rekening": {
+                                                    "type": "string",
+                                                    "description": "rekening number"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "description": "image url"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "description": "Payment proof updated at"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "description": "Payment proof created at"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "OK",
+                                    "data": {
+                                        "id": 2,
+                                        "order_id": 5,
+                                        "name": "andika",
+                                        "bank": "bbb",
+                                        "rekening": "123123123",
+                                        "image": "http://localhost:8000/storage/images/payment/Rnv4oKUEvh5PooX7UVKGci3j9mf2XmsN8WxnKZLl.png",
+                                        "created_at": "2023-08-20T07:25:22.000000Z",
+                                        "updated_at": "2023-08-20T07:35:43.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/UnprocessableEntitiy"
                     }
                 }
             }

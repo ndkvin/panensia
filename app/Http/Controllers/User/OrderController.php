@@ -20,7 +20,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::where('user_id', auth()->user()->id)->paginate($request->input('per_page', 10));
+        $orders = Order::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate($request->input('per_page', 10));
         
         return response()->json([
             'success' => true,
@@ -59,6 +59,7 @@ class OrderController extends Controller
             'address.province' => 'required|string',
             'address.postal_code' => 'required|numeric',
             'address.phone' => 'required|string|min:10|max:13',
+            'address.name' => 'required|string',
             'payment' => 'required|numeric|in:1,2',
         ]);
 
@@ -88,15 +89,20 @@ class OrderController extends Controller
                 'payment_ref' => '0',
                 'total' => 0,
                 'payment_method' => $payment_method,
+                'status' => 'UNPAID',
+            ]);
+
+            $order->address()->create([
+                'name' => $request->address['name'],
                 'address' => $request->address['address'],
                 'street' => $request->address['street'],
                 'city' => $request->address['city'],
                 'province' => $request->address['province'],
                 'postal_code' => $request->address['postal_code'],
                 'phone' => $request->address['phone'],
-                'status' => 'UNPAID',
             ]);
-            
+
+            $weight = 0;
             $total = 0;
 
             foreach($request->items as $item) {
@@ -121,7 +127,9 @@ class OrderController extends Controller
                   'quantity' => $item['quantity'],
                   'item_price' => $productType->price,
                 ]);
+
                 $total += $productType->price * $item['quantity'];
+                $weight += $productType->weight * $item['quantity'];
 
                 Cart::where('user_id', auth()->user()->id)
                     ->where('product_type_id', $item['product_type_id'])
@@ -139,7 +147,13 @@ class OrderController extends Controller
 
                 $order->save();
 
+                $order->shipment()->create([
+                  'weight' => $weight,
+                ]);
+
                 DB::commit();
+
+                $order->weight = $weight;
 
                 return response()->json([
                   'success' => true,
@@ -155,8 +169,14 @@ class OrderController extends Controller
             $order->total = $total;
             $order->save();
 
+            $order->shipment()->create([
+              'weight' => $weight,
+            ]);
+
             DB::commit();
-            
+
+            $order->weight = $weight;
+
             return response()->json([
               'success' => true,
               'code' => 201,
@@ -188,10 +208,16 @@ class OrderController extends Controller
           ], 403);
         }
         $order = Order::with([
+          'address',
+          'shipment',
           'orderProducts' => function($query) {
             $query->join('product_types', 'order_products.product_type_id', '=', 'product_types.id')
                   ->join('products', 'product_types.product_id', '=', 'products.id')
-                  ->select('order_products.*', 'products.name');
+                  ->Join('product_images', function ($join) {
+                    $join->on('product_images.product_id', '=', 'products.id')
+                      ->whereRaw('product_images.id = (SELECT id FROM product_images WHERE product_id = products.id ORDER BY created_at ASC LIMIT 1)');
+                  })
+                  ->select('order_products.*', 'products.name', 'product_images.image');
           },
         ])->where('id', $order->id)->first();
 

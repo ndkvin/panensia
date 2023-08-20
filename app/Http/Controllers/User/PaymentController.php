@@ -99,7 +99,7 @@ class PaymentController extends Controller
             ], 403);
         }
 
-        if($order->payment_method_id != 1) {
+        if($order->payment_method == "MIDTRANS") {
             return response()->json([
                 'success' => false,
                 'code' => 400,
@@ -117,7 +117,7 @@ class PaymentController extends Controller
           'data' => [
             'payment_status' => $order->status,
           ]
-          ]);
+        ]);
     }
 
     /**
@@ -144,7 +144,7 @@ class PaymentController extends Controller
             ], 403);
         }
 
-        if($order->payment_method_id != 1) {
+        if($order->payment_method == "MIDTRANS") {
             return response()->json([
                 'success' => false,
                 'code' => 400,
@@ -166,7 +166,7 @@ class PaymentController extends Controller
             ], 400);
         }
 
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make($request->json()->all(), [
             'name' => 'required|string',
             'bank' => 'required|string',
             'rekening' => 'required|string',
@@ -262,6 +262,28 @@ class PaymentController extends Controller
               'message' => 'Unprocessable Entity',
               'errors' => $errorMessage
             ], 422);
+        }
+
+        if($order->status != 'PENDING') {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => 'Bad Request',
+                'errors' => [
+                    'You are not allowed to access this resource'
+                ]
+            ], 400);
+        }
+
+        if($payment->image != null) {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => 'Bad Request',
+                'errors' => [
+                    'You are not allowed to access this resource'
+                ]
+            ], 400);
         }
 
         $payment->update([
