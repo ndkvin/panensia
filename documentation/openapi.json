@@ -3628,6 +3628,76 @@
                     }
                 }
             }
+        },
+        "/user/payment": {
+            "get": {
+                "description": "Payment method available",
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "auth_user": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment method available",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "description": "Payment method ID"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "Payment method name"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "OK",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "Manual Transfer"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Automatic Verification"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
         }
     },
     "components": {

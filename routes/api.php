@@ -68,7 +68,7 @@ Route::group([
   Route::resource('order', App\Http\Controllers\User\OrderController::class)->except(['edit', 'create', 'destroy', 'update']);
   Route::resource('order/{order}/payment', App\Http\Controllers\User\PaymentController::class)->only(['index', 'store']);
   Route::post('order/{order}/payment/image', [App\Http\Controllers\User\PaymentController::class, 'storeImage']);
-  Route::post('/payment/available', [App\Http\Controllers\User\PaymentController::class, 'available']);
+  Route::get('payment', [App\Http\Controllers\User\PaymentController::class, 'available']);
   Route::resource('address', App\Http\Controllers\User\AddressController::class)->except(['edit', 'create']);
 });
 
